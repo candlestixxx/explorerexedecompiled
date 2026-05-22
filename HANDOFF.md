@@ -1,26 +1,20 @@
 # Session Handoff Log
 
 ## Session Details
-- **Focus**: Initial project setup and structural synchronization according to master directives.
+- **Focus**: Second session - Implementing project structures and scripting pipelines.
 - **Actions Completed**:
-  - Read instructions from user and original repository `README.md`.
-  - Executed Upstream Sync via `git fetch --all --tags`.
-  - Generated core documentation files:
-    - `ROADMAP.md`
-    - `TODO.md`
-    - `VISION.md`
-    - `MEMORY.md`
-    - `DEPLOY.md`
-    - `IDEAS.md`
-    - `VERSION.md` (set to `0.1.0`)
-    - `CHANGELOG.md`
-    - `HANDOFF.md`
+  - Created structural directories: `src/` and `include/`.
+  - Scaffolded Phase 1 & 2 Python scripts: `scripts/fetch_pdb.py`, `scripts/ingest_binary.py`, `scripts/decompile.py`.
+  - Drafted core C++ guidelines in `C_CPP_GUIDELINES.md`.
+  - Updated `TODO.md` with accomplishments and locked target binary.
+  - Bumped `VERSION.md` to `0.1.1` and updated `CHANGELOG.md`.
 
 ## Findings
-- Project is in its absolute nascent stage. No source code or decompilation scripts exist yet.
-- The focus is explicitly on setting up instructions, structures, and goals for future AI agents to decompile `explorer.exe`.
+- The target binary was explicitly designated as `Windows 10 Build 19045`.
+- Python scripts are initialized as stubs; they currently mock the functionality and use `argparse` and `logging` libraries.
+- The project structure for holding the output C++ artifacts is now formally defined in `src/` and `include/`.
 
 ## Next Steps for Successor Model
-- Implement initial Python/Bash scaffolding under `scripts/` as outlined in `DEPLOY.md` and `TODO.md`.
-- Determine and lock in a specific Windows build version of `explorer.exe` to target.
-- Proceed with Phase 1 execution (Binary Ingestion & PDB Symbol retrieval).
+- Expand the `scripts/fetch_pdb.py` to legitimately perform an HTTP GET request to the Microsoft Symbol Server using a test GUID/Age hash.
+- Determine the deployment specifics for headless disassemblers (e.g., pulling a Ghidra container or downloading it) as listed in the TODO.
+- Continue down Phase 1 execution flow.
