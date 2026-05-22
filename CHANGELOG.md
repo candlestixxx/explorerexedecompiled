@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.2] - Microsoft Symbol Server Integration
+- Implemented actual HTTP GET requests in `scripts/fetch_pdb.py` to retrieve PDBs from Microsoft Symbol Server using `urllib.request`.
+- Updated `TODO.md` to reflect implementation status.
+- Validated error handling against missing dummy PDB records.
+
 ## [0.1.1] - Scaffolding Pipeline
 - Created `src/` and `include/` directories to establish the C++ project structure.
 - Scaffolded pipeline python scripts under `scripts/` (`fetch_pdb.py`, `ingest_binary.py`, `decompile.py`).

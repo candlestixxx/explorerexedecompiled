@@ -1,20 +1,18 @@
 # Session Handoff Log
 
 ## Session Details
-- **Focus**: Second session - Implementing project structures and scripting pipelines.
+- **Focus**: Third session - Microsoft Symbol Server Integration.
 - **Actions Completed**:
-  - Created structural directories: `src/` and `include/`.
-  - Scaffolded Phase 1 & 2 Python scripts: `scripts/fetch_pdb.py`, `scripts/ingest_binary.py`, `scripts/decompile.py`.
-  - Drafted core C++ guidelines in `C_CPP_GUIDELINES.md`.
-  - Updated `TODO.md` with accomplishments and locked target binary.
-  - Bumped `VERSION.md` to `0.1.1` and updated `CHANGELOG.md`.
+  - Refactored `scripts/fetch_pdb.py` from a stub into a functional script that executes HTTP GET requests against the Microsoft Symbol Server.
+  - Implemented exception handling for 404s and network errors within the PDB fetcher.
+  - Bumped `VERSION.md` to `0.1.2` and updated `CHANGELOG.md` and `TODO.md`.
 
 ## Findings
-- The target binary was explicitly designated as `Windows 10 Build 19045`.
-- Python scripts are initialized as stubs; they currently mock the functionality and use `argparse` and `logging` libraries.
-- The project structure for holding the output C++ artifacts is now formally defined in `src/` and `include/`.
+- Microsoft Symbol Server requires a valid `User-Agent` string (e.g., `Microsoft-Symbol-Server/10.0.0.0`), otherwise it rejects requests.
+- The target URL format strictly follows: `https://msdl.microsoft.com/download/symbols/<pdb_name>/<guid_age>/<pdb_name>`.
+- Dummy/invalid GUID_Age hashes gracefully fail with HTTP 404.
 
 ## Next Steps for Successor Model
-- Expand the `scripts/fetch_pdb.py` to legitimately perform an HTTP GET request to the Microsoft Symbol Server using a test GUID/Age hash.
+- Begin implementing `scripts/ingest_binary.py` to actually hash and validate `explorer.exe` (Windows 10 Build 19045) and extract its exact GUID/Age to feed into the PDB fetcher.
 - Determine the deployment specifics for headless disassemblers (e.g., pulling a Ghidra container or downloading it) as listed in the TODO.
 - Continue down Phase 1 execution flow.
