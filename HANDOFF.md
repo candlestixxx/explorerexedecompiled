@@ -1,18 +1,19 @@
 # Session Handoff Log
 
 ## Session Details
-- **Focus**: Third session - Microsoft Symbol Server Integration.
+- **Focus**: Fourth session - Binary Ingestion and PE Header Analysis.
 - **Actions Completed**:
-  - Refactored `scripts/fetch_pdb.py` from a stub into a functional script that executes HTTP GET requests against the Microsoft Symbol Server.
-  - Implemented exception handling for 404s and network errors within the PDB fetcher.
-  - Bumped `VERSION.md` to `0.1.2` and updated `CHANGELOG.md` and `TODO.md`.
+  - Refactored `scripts/ingest_binary.py` to utilize `pefile` to parse `explorer.exe` and locate the CodeView Debug Directory.
+  - The script now accurately generates the `GUID/Age` hash required by the MS Symbol Server.
+  - Added a `requirements.txt` tracking the newly introduced `pefile` dependency.
+  - Bumped `VERSION.md` to `0.1.3` and updated tracking documentation.
 
 ## Findings
-- Microsoft Symbol Server requires a valid `User-Agent` string (e.g., `Microsoft-Symbol-Server/10.0.0.0`), otherwise it rejects requests.
-- The target URL format strictly follows: `https://msdl.microsoft.com/download/symbols/<pdb_name>/<guid_age>/<pdb_name>`.
-- Dummy/invalid GUID_Age hashes gracefully fail with HTTP 404.
+- The GUID needed for the Symbol Server must be extracted from the `IMAGE_DEBUG_TYPE_CODEVIEW` (type 2) directory.
+- The format requires stripping hyphens from the GUID hex string and directly appending the Age integer in hex format.
+- `pefile` successfully maps these directories allowing the extraction of both the GUID and the original `pdb_name`.
 
 ## Next Steps for Successor Model
-- Begin implementing `scripts/ingest_binary.py` to actually hash and validate `explorer.exe` (Windows 10 Build 19045) and extract its exact GUID/Age to feed into the PDB fetcher.
-- Determine the deployment specifics for headless disassemblers (e.g., pulling a Ghidra container or downloading it) as listed in the TODO.
-- Continue down Phase 1 execution flow.
+- Wire `scripts/ingest_binary.py` and `scripts/fetch_pdb.py` together into a cohesive pipeline (perhaps via a master orchestrator script or bash file).
+- Proceed to select and containerize the headless disassembler (Ghidra or IDA) and begin implementing `scripts/decompile.py`.
+- Finalize Phase 1 and move into Phase 2 tasks (Automated Disassembly).

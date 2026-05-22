@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.3] - PE File Parsing & Binary Ingestion
+- Implemented `pefile` integration in `scripts/ingest_binary.py` to extract CodeView Debug Directories.
+- Script now computes SHA256 hashes and dynamically returns the GUID/Age string needed for PDB fetching.
+- Added `requirements.txt` to track `pefile` and future Python dependencies.
+
 ## [0.1.2] - Microsoft Symbol Server Integration
 - Implemented actual HTTP GET requests in `scripts/fetch_pdb.py` to retrieve PDBs from Microsoft Symbol Server using `urllib.request`.
 - Updated `TODO.md` to reflect implementation status.
