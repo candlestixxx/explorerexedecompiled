@@ -17,4 +17,5 @@
 - [x] Create a master `run_all.sh` orchestrator script to link all 4 phases and provide a single entry point.
 - [x] Test the master execution pipeline locally against a mock executable to verify structural error handling.
 - [x] Phase 5: Develop advanced AST parsing (via `libclang` or similar) to structurally flatten `goto` statements rather than simply flagging them via regex. (Implemented in `scripts/flatten_cfg.py`)
+- [x] Phase 6: Synthesize C++ basic blocks using libclang to rewrite backward `goto` logic into native `while` loops. (Implemented in `scripts/synthesize_ast_blocks.py`)
 - [x] Draft coding guidelines for the generated C++ (naming conventions, documentation rules). (Created `C_CPP_GUIDELINES.md`)

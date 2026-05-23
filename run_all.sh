@@ -51,6 +51,9 @@ python3 scripts/refine_c.py "$MONOLITHIC_C" "$REFINED_C"
 echo "[Phase 3] Flattening AST Control Flow (Removing gotos)..."
 python3 scripts/flatten_cfg.py "$REFINED_C" "$REFINED_C"
 
+echo "[Phase 3] Synthesizing AST Blocks (Reconstructing loops)..."
+python3 scripts/synthesize_ast_blocks.py "$REFINED_C" "$REFINED_C"
+
 echo "[Phase 3] Segmenting into C++ Modules..."
 python3 scripts/segment_c.py "$REFINED_C" "$SRC_DIR"
 
