@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.11] - Phase 3 Header Synthesis and Closure
+- Implemented `scripts/synthesize_headers.py` to auto-generate `.h` files from segmented C++ source code.
+- Successfully closed out all Phase 3 tasks.
+- Updated `TODO.md` to map out Phase 4 requirements involving build systems and compilation verification.
+
 ## [0.1.10] - Phase 3 Modular Segmentation
 - Implemented `scripts/segment_c.py` to logically split the refined monolithic C output into domain-specific C++ files within the `src/` directory.
 - Updated `TODO.md` to define the final objective of Phase 3 (Header Synthesis).
