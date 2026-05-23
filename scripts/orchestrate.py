@@ -24,13 +24,9 @@ def run_phase_1(binary_path, pdb_output_dir):
 
     # Step 1: Validate and extract info
     logger.info("--- Step 1: Ingesting Binary ---")
-    if not ingest_binary.validate_binary(binary_path):
-        logger.error("Binary validation failed. Halting pipeline.")
-        return False
-
-    guid_age, pdb_name = ingest_binary.extract_pdb_info(binary_path)
+    guid_age, pdb_name = ingest_binary.validate_binary(binary_path)
     if not guid_age or not pdb_name:
-        logger.error("Could not extract PDB info required for fetch. Halting pipeline.")
+        logger.error("Binary validation failed or PDB info missing. Halting pipeline.")
         return False
 
     # Step 2: Fetch PDB

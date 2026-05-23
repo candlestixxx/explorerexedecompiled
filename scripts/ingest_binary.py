@@ -47,9 +47,9 @@ def extract_pdb_info(filepath):
         # Check if the debug entry is of type IMAGE_DEBUG_TYPE_CODEVIEW (2)
         if debug_data.struct.Type == 2:
             try:
-                cv_data = pe.parse_debug_directory(debug_data.struct.AddressOfRawData, debug_data.struct.SizeOfData)
+                cv_data = debug_data.entry
                 # Ensure it's the RSDS (PDB 7.0) signature
-                if cv_data.Signature_String == b"RSDS":
+                if hasattr(cv_data, 'Signature_String') and cv_data.Signature_String == b"RSDS":
                     # GUID format: data1-data2-data3-data4
                     # Symbol Server expects GUID formatted as hex string + Age appended
                     guid_hex = f"{cv_data.Signature_Data1:08X}{cv_data.Signature_Data2:04X}{cv_data.Signature_Data3:04X}"
@@ -69,10 +69,11 @@ def extract_pdb_info(filepath):
 def validate_binary(filepath):
     """
     Validates the target binary and extracts its GUID/Age hash for PDB retrieval.
+    Returns (guid_age, pdb_name) or (None, None)
     """
     if not os.path.exists(filepath):
         logger.error(f"Binary not found: {filepath}")
-        return False
+        return None, None
 
     logger.info(f"Validating binary at: {filepath}")
 
@@ -85,18 +86,18 @@ def validate_binary(filepath):
         logger.info(f"PDB Name extracted: {pdb_name}")
         logger.info(f"GUID/Age hash extracted: {guid_age}")
         logger.info("Binary validation passed.")
-        return True
+        return guid_age, pdb_name
     else:
         logger.error("Failed to extract GUID/Age or PDB Name. Binary might not be supported or is stripped.")
-        return False
+        return None, None
 
 def main():
     parser = argparse.ArgumentParser(description="Ingest and validate explorer.exe binary")
     parser.add_argument("binary_path", help="Path to the target explorer.exe binary")
     args = parser.parse_args()
 
-    success = validate_binary(args.binary_path)
-    if not success:
+    guid_age, pdb_name = validate_binary(args.binary_path)
+    if not guid_age:
         sys.exit(1)
 
 if __name__ == "__main__":

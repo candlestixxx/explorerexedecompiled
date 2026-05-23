@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.5] - Phase 2 Transition
+- Updated `TODO.md` to formally close out Phase 1 initialization.
+- Added tasks for Phase 2: Dockerizing Ghidra/RetDec and implementing `scripts/decompile.py`.
+
 ## [0.1.4] - Phase 1 Pipeline Orchestration
 - Created `scripts/orchestrate.py` to link `ingest_binary.py` and `fetch_pdb.py` into a cohesive Phase 1 workflow.
 - Updated `TODO.md` to reflect the completed Phase 1 orchestration task.
