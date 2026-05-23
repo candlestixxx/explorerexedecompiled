@@ -13,10 +13,3 @@
 ## 3. Control Flow
 - **De-flattening:** Eliminate `goto` statements resulting from compiler optimizations. Reconstruct logical `while`, `for`, and `if-else` blocks.
 - **Early Returns:** Prefer early returns over deeply nested `if` blocks to improve readability.
-
-## 4. Documentation
-- **Intent Comments:** Comment the *why* behind a Win32 API call sequence, not just the *what*.
-- **Undocumented APIs:** If reversing an undocumented structure or API, heavily document the inferred layout and bounds.
-
-## 5. COM and Interfaces
-- Represent COM objects using standard C++ abstract classes with pure virtual functions matching the vtable layout.

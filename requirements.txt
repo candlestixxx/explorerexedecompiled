@@ -1,2 +1,2 @@
-pefile
-libclang
+pefile==2023.2.7
+libclang==16.0.1.1

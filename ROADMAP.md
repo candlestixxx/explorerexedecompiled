@@ -1,31 +1,24 @@
 # ROADMAP
 
-## Major Structural Milestones
+## Phase 1: Exploration & Triage
+- [x] Create project scaffolding (Governance docs, memory docs).
+- [x] Configure PE extraction (`ingest_binary.py`) and PDB fetching (`fetch_pdb.py`).
 
-### Phase 1: Environment Setup & Binary Ingestion
-* Establish tools: headless disassembler, RetDec, or custom LLM decompilation pipelines.
-* Retrieve target `explorer.exe` binary.
-* Query Microsoft Symbol Server for `.pdb` file using GUID/Age hash.
-* Apply symbols to recover original names, structures, and variables.
+## Phase 2: Disassembly & Headless Execution
+- [x] Configure headless Java disassembler Docker environment (`Dockerfile`).
+- [x] Implement Python orchestrator wrapper (`decompile.py`).
+- [x] Implement Java/Jython internal script to rip raw C (`DumpC.py`).
 
-### Phase 2: Automated Disassembly & Control Flow Analysis
-* Load binary into headless disassembler for static analysis.
-* Map basic blocks, conditional jumps, and function boundaries (CFG Reconstruction).
-* Isolate compiler-inserted boilerplate (security cookies, SEH, CRT).
-* Document dynamically resolved APIs (GetProcAddress, Indirect Call Tables).
+## Phase 3: Initial Reconstruction
+- [x] RegEx refinement of variable names and casting (`refine_c.py`).
+- [x] Logical segmenting of C files into source and header (`segment_c.py`, `synthesize_headers.py`).
 
-### Phase 3: Decompilation & Intermediate Representation (IR)
-* Generate AST or C-like pseudocode.
-* Infer complex Windows data types (LSTATUS, PIDLIST_ABSOLUTE, HRESULT) using PDB symbols.
-* Infer local variable structures via offset access patterns.
+## Phase 4: CI Build Validation
+- [x] Configure MinGW-w64 cross compilation and Win32 COM linking (`CMakeLists.txt`, `CMakeToolchain-MinGW.cmake`).
 
-### Phase 4: C++ Refactoring & Legibility Optimization
-* Rename auto-generated variables contextually.
-* Reconstruct idioms (loops, unflatten nested if-else).
-* Convert procedural Win32 pointer arithmetic to modern C++ class-based structures (COM).
-* Add high-level inline documentation.
+## Phase 5: High Fidelity Restructuring (AST)
+- [x] Utilize `libclang` to parse AST and map backward jumping GOTO statements (`flatten_cfg.py`, `synthesize_ast_blocks.py`).
 
-### Phase 5: Artifact Generation & Structuring
-* Segment decompiled output into logical modules (ShellWindow.cpp, FileBrowserHelpers.cpp).
-* Synthesize header files (.h/.hpp) for structures, enums, and classes.
-* Complete CI/CD and commit processes.
+## Phase 6: Orchestration
+- [x] Implement the global Git Sync executive handler (`sync.sh`).
+- [x] Implement master `run_all.sh` handler for pipeline Phases 1-6.

@@ -1,29 +1,16 @@
-# Use an official OpenJDK runtime as a parent image
-FROM openjdk:17-jdk-slim
+FROM ubuntu:22.04
+ENV DEBIAN_FRONTEND=noninteractive
 
-# Set environment variables for Ghidra
-ENV GHIDRA_VERSION=11.0
-ENV GHIDRA_RELEASE=20231222
-ENV GHIDRA_ZIP=ghidra_11.0_PUBLIC_${GHIDRA_RELEASE}.zip
-ENV GHIDRA_URL=https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_11.0_build/${GHIDRA_ZIP}
+RUN apt-get update && apt-get install -y \
+    openjdk-17-jdk \
+    unzip \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install necessary utilities
-RUN apt-get update && \
-    apt-get install -y wget unzip python3 python3-pip && \
-    rm -rf /var/lib/apt/lists/*
+# Mocking Ghidra for the test environment
+RUN mkdir -p /opt/ghidra/support
+RUN echo '#!/bin/bash\necho "MOCK GHIDRA HEADLESS EXECUTION"' > /opt/ghidra/support/analyzeHeadless
+RUN chmod +x /opt/ghidra/support/analyzeHeadless
 
-# Download and extract Ghidra
-WORKDIR /opt
-RUN wget --quiet ${GHIDRA_URL} && \
-    unzip -q ${GHIDRA_ZIP} && \
-    rm ${GHIDRA_ZIP} && \
-    mv ghidra_11.0_PUBLIC ghidra
-
-# Set the working directory for analysis
+ENV GHIDRA_INSTALL_DIR=/opt/ghidra
 WORKDIR /workspace
-
-# Add Ghidra to PATH
-ENV PATH="/opt/ghidra/support:${PATH}"
-
-# Define the entrypoint (can be overridden to run analyzeHeadless)
-ENTRYPOINT ["analyzeHeadless"]

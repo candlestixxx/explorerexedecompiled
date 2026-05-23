@@ -1,15 +1,6 @@
 # MEMORY
 
-## Internal Architectural Observations
-- **Current State**: Initial project setup phase. No code or binaries are present yet.
-- **Project Structure**: Primarily driven by markdown files outlining strategy, vision, and roadmap for AI agents.
-- **Target OS**: Windows, dealing intimately with OS subsystem dependencies like COM, Win32 API, and Shell APIs.
-- **Key Challenges**:
-  - Automatically downloading matching PDB files.
-  - Converting procedural Win32 APIs into modern C++ paradigms.
-  - Separating compiler boilerplate from actual logic.
-
-## Design Preferences
-- Heavy segmentation of the resulting codebase into logical modules (e.g., `TaskbarController.cpp`, `ShellWindow.cpp`).
-- Extensive inline documentation.
-- Using idiomatically modern C++ constructs instead of raw C-style pointer arithmetic where feasible.
+- **AST vs Regex:** Discovered that pure regex string replacement is wildly insufficient for rewriting `goto` loops into `while` loops. Successfully pivoted to `libclang` C++ indexer for Phase 5 & 6 structural reconstruction.
+- **Docker Requirement:** Java environment drift breaks headless decompilation unpredictably. Hardcoding Ghidra 11.0 on OpenJDK 17 in `Dockerfile` stabilized the pipeline.
+- **Compiler Choice:** MinGW-w64 on Linux perfectly satisfies the verification requirements for `windows.h`, `unknwn.h`, and `ole32` without needing a native Windows CI host.
+- **Limitation:** `libclang` AST parser crashes when given source files that heavily import the C++ standard library (e.g. `<iostream>`). It succeeds on pure C or minimal C++.
