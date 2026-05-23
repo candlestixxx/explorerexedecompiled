@@ -8,5 +8,5 @@
 - [x] Write the first Python/Bash scripts for initial headless disassembly runs. (Implemented `scripts/ingest_binary.py` to extract PE hashes and `scripts/decompile.py` scaffold)
 - [x] Create a master orchestrator script to link binary ingestion and PDB fetching into a Phase 1 pipeline. (Implemented `scripts/orchestrate.py`)
 - [x] Phase 2: Containerize a headless disassembler (Ghidra/RetDec) via Docker to run `scripts/decompile.py` consistently. (Created `Dockerfile` for Ghidra)
-- [ ] Phase 2: Refactor `scripts/decompile.py` to execute headless analysis via Docker and dump Intermediate Representation (IR) / ASTs.
+- [x] Phase 2: Refactor `scripts/decompile.py` to execute headless analysis via Docker and dump Intermediate Representation (IR) / ASTs. (Implemented Docker invocation in `scripts/decompile.py`)
 - [x] Draft coding guidelines for the generated C++ (naming conventions, documentation rules). (Created `C_CPP_GUIDELINES.md`)
