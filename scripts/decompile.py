@@ -31,23 +31,27 @@ def run_headless_decompilation(binary_path, output_dir):
 
     binary_abs_path = os.path.abspath(binary_path)
     output_abs_dir = os.path.abspath(output_dir)
+    scripts_abs_dir = os.path.abspath(os.path.dirname(__file__))
     binary_name = os.path.basename(binary_path)
 
     logger.info(f"Starting headless decompilation via Docker on: {binary_abs_path}")
     logger.info(f"Output will be saved to: {output_abs_dir}")
 
-    # We mount the input binary and output directory into the container
-    # The analyzeHeadless script requires a project directory (which we map to /workspace/proj)
-    # and a project name. We use -import to pull the binary in.
+    # We mount the input binary, output directory, and the scripts directory into the container.
+    # The analyzeHeadless script requires a project directory (which we map to /workspace)
+    # and a project name. We use -import to pull the binary in and -postScript to dump ASTs.
 
     docker_cmd = [
         "docker", "run", "--rm",
         "-v", f"{binary_abs_path}:/input/{binary_name}:ro",
         "-v", f"{output_abs_dir}:/output:rw",
+        "-v", f"{scripts_abs_dir}:/ghidra_scripts:ro",
         "explorer-decompiler",
         "/workspace",       # Project path inside container
         "ExplorerProj",     # Project name
-        "-import", f"/input/{binary_name}"
+        "-import", f"/input/{binary_name}",
+        "-scriptPath", "/ghidra_scripts",
+        "-postScript", "DumpC.py"
     ]
 
     logger.info(f"Executing: {' '.join(docker_cmd)}")
