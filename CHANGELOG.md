@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.9] - Phase 3 Pseudocode Refinement
+- Added `scripts/refine_c.py` to post-process Ghidra's monolithic C output using heuristic regex parsing.
+- Refinement enforces modern C++ casts, normalizes auto-generated variable names, and explicitly flags un-flattened `goto` statements.
+
 ## [0.1.8] - Ghidra IR Extraction Script
 - Authored `scripts/DumpC.py`, a Jython script utilizing Ghidra's `DecompInterface` to extract C pseudocode.
 - Updated `scripts/decompile.py` to dynamically mount the script directory and invoke `DumpC.py` post-analysis.
