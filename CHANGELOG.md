@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.4] - Phase 1 Pipeline Orchestration
+- Created `scripts/orchestrate.py` to link `ingest_binary.py` and `fetch_pdb.py` into a cohesive Phase 1 workflow.
+- Updated `TODO.md` to reflect the completed Phase 1 orchestration task.
+
 ## [0.1.3] - PE File Parsing & Binary Ingestion
 - Implemented `pefile` integration in `scripts/ingest_binary.py` to extract CodeView Debug Directories.
 - Script now computes SHA256 hashes and dynamically returns the GUID/Age string needed for PDB fetching.

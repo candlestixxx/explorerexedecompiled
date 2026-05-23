@@ -1,19 +1,18 @@
 # Session Handoff Log
 
 ## Session Details
-- **Focus**: Fourth session - Binary Ingestion and PE Header Analysis.
+- **Focus**: Fifth session - Phase 1 Pipeline Orchestration.
 - **Actions Completed**:
-  - Refactored `scripts/ingest_binary.py` to utilize `pefile` to parse `explorer.exe` and locate the CodeView Debug Directory.
-  - The script now accurately generates the `GUID/Age` hash required by the MS Symbol Server.
-  - Added a `requirements.txt` tracking the newly introduced `pefile` dependency.
-  - Bumped `VERSION.md` to `0.1.3` and updated tracking documentation.
+  - Authored `scripts/orchestrate.py` to seamlessly link `ingest_binary.py` and `fetch_pdb.py`.
+  - The orchestrator validates the target binary, extracts its GUID/Age hash, and subsequently downloads the corresponding PDB.
+  - Handled negative test cases (e.g., non-PE files) gracefully to prevent catastrophic pipeline failures.
+  - Bumped `VERSION.md` to `0.1.4` and updated `CHANGELOG.md` and `TODO.md`.
 
 ## Findings
-- The GUID needed for the Symbol Server must be extracted from the `IMAGE_DEBUG_TYPE_CODEVIEW` (type 2) directory.
-- The format requires stripping hyphens from the GUID hex string and directly appending the Age integer in hex format.
-- `pefile` successfully maps these directories allowing the extraction of both the GUID and the original `pdb_name`.
+- The `orchestrate.py` pipeline requires the Python `sys.path` or `PYTHONPATH` to resolve intra-directory imports correctly if executed from the project root.
+- Phase 1 (Binary Ingestion & PDB retrieval) is now structurally complete and fully functional given a valid Windows 10 PE executable.
 
 ## Next Steps for Successor Model
-- Wire `scripts/ingest_binary.py` and `scripts/fetch_pdb.py` together into a cohesive pipeline (perhaps via a master orchestrator script or bash file).
-- Proceed to select and containerize the headless disassembler (Ghidra or IDA) and begin implementing `scripts/decompile.py`.
-- Finalize Phase 1 and move into Phase 2 tasks (Automated Disassembly).
+- Proceed to Phase 2: Select and containerize the headless disassembler (Ghidra or IDA Pro).
+- Begin implementing the logic inside `scripts/decompile.py` to invoke the chosen disassembler against the ingested `explorer.exe` and its downloaded PDB.
+- Explore methods to dump ASTs or pseudo-C from the headless disassembler to bridge the gap into Phase 3.
