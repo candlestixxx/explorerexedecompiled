@@ -60,6 +60,10 @@ def extract_pdb_info(filepath):
                     guid_age = f"{guid_hex}{age_hex}"
                     pdb_name = cv_data.PdbFileName.decode("utf-8").strip('\0')
 
+                    # Extract just the basename in case the compiler embedded an absolute path
+                    import os
+                    pdb_name = os.path.basename(pdb_name.replace('\\', '/'))
+
                     return guid_age, pdb_name
             except Exception as e:
                 logger.error(f"Error parsing CodeView debug data: {e}")

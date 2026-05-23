@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 - Completed final execution of the pipeline orchestration against an empty file proxy for `explorer.exe`, validating robust failure catching by `pefile`.
 - Finalized Phase 1-4 pipeline implementations, logging complete environment readiness in `HANDOFF.md`.
 
+## [1.1.0] - Phase 5 Kickoff (AST Refinement)
+- Transitioned project goals to target advanced AST logic for control-flow flattening.
+- Updated `TODO.md` to reflect Phase 5 planning targets.
+
 ## [1.0.0] - Foundation Finalization
 - Upgraded project to v1.0.0, indicating the foundational reverse-engineering pipeline is fully orchestrated, tested via mocks, and structurally complete.
 - Readied for true execution against Windows 10 `explorer.exe` (Build 19045).

@@ -45,8 +45,8 @@ def refine_pseudocode(input_file, output_file):
     # Rule: Modern C++ casts (Heuristic representation for raw casts)
     # This is a very rudimentary regex to catch (int)x style casts and replace with static_cast.
     # Note: A true AST parser (like libclang) is required for 100% accuracy.
-    content = re.sub(r'\(([A-Z][a-zA-Z0-9_]+ \*)\)', r'reinterpret_cast<\1>', content)
-    content = re.sub(r'\((int|char|short|long|unsigned int|DWORD|WORD|BYTE)\)', r'static_cast<\1>', content)
+    content = re.sub(r'\(([A-Z][a-zA-Z0-9_]+ \*)\)([a-zA-Z0-9_]+)', r'reinterpret_cast<\1>(\2)', content)
+    content = re.sub(r'\((int|char|short|long|unsigned int|DWORD|WORD|BYTE)\)([a-zA-Z0-9_]+)', r'static_cast<\1>(\2)', content)
 
     with open(output_file, 'w') as f:
         f.write(content)

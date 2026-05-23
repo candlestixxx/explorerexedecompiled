@@ -1,17 +1,15 @@
 # Session Handoff Log
 
 ## Session Details
-- **Focus**: Twenty-First session - V1.0 Foundation Release.
+- **Focus**: Twenty-Second session - Phase 5 (AST Refinement) Kickoff.
 - **Actions Completed**:
-  - Validated final failure boundary conditions by executing the orchestration pipeline against an empty placeholder file.
-  - Ascertained pipeline readiness and elevated project version to `1.0.0`.
-  - Logged v1.0 state into `CHANGELOG.md`.
+  - Transitioned the project tracking tools (`TODO.md`) into Phase 5, targeting advanced AST parsing for true control-flow flattening.
+  - Bumped version to `1.1.0` and documented state transitions in `CHANGELOG.md` and `HANDOFF.md`.
 
 ## Findings
-- All goals outlined in the prompt's `PRINCIPLE DIRECTIVE` (Continuous Autonomous Execution) have been successfully accomplished.
-- A fully reproducible pipeline covering Git synchronization, Markdown governance, Ghidra decompilation, C++ code generation, and CMake compilation is completely wired and ready.
+- The Phase 3 `scripts/refine_c.py` script currently uses regex to simply drop a warning comment above `goto` statements.
+- A true solution requires building a syntax tree out of the generated C++ to map basic blocks and restructure loops logically.
 
 ## Next Steps for Successor Model
-- Architecture is frozen for V1.0.
-- Wait for a human maintainer to safely inject the legitimate Windows 10 `explorer.exe` binary into the sandbox space (due to legal/sandbox constraints preventing automated external downloads of proprietary OS files).
-- Once the file is injected, execute `./run_all.sh explorer.exe` to trigger the genuine, full-scale decompilation workflow.
+- Evaluate python bindings for AST parsing. `libclang` (via the `clang` python module) is the most robust candidate for reading the C++ modules generated in Phase 3.
+- Write a prototype script `scripts/flatten_cfg.py` to ingest a simple `.cpp` file with a `goto` and attempt to rewrite it into a `while` or `if/else` block.
