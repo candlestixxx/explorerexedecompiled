@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.18] - Complex Mock Integration Testing
+- Wrote a complex C++ program mimicking Windows Shell structures (COM objects, namespaces) to `mock_complex.cpp`.
+- Compiled the mock utilizing MinGW cross-compiler to generate a valid testing `explorer.exe`.
+- Validated `run_all.sh` orchestration error boundaries against the heavily structured mock executable.
+
 ## [0.1.17] - Robust Pipeline Path Resolution
 - Hardened `run_all.sh` to resolve relative input binary paths safely by incorporating `realpath` before modifying internal directory contexts.
 - Bumped version correctly based on pipeline polishing session.
