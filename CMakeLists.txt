@@ -19,10 +19,12 @@ file(GLOB SOURCES "src/*.cpp")
 if(SOURCES)
     add_library(ExplorerDecompiledStatic STATIC ${SOURCES})
 
-    # Ideally this would be compiled with MSVC targeting Windows,
-    # but for baseline CI verification on Linux/WSL, we suppress missing
-    # Windows-specific attributes if compiling with Clang/GCC
-    if (NOT MSVC)
+    # If we are cross-compiling via MinGW, we need to explicitly link Windows libraries
+    # like ole32 to resolve COM headers (e.g. unknwn.h)
+    if(MINGW)
+        target_link_libraries(ExplorerDecompiledStatic ole32 uuid)
+    elseif(NOT MSVC AND NOT MINGW)
+        # For non-Windows native compilers acting as a baseline mock, suppress errors
         target_compile_options(ExplorerDecompiledStatic PRIVATE -w)
     endif()
 else()

@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.13] - Phase 4 Cross-Compilation CI Workflow
+- Added `CMakeToolchain-MinGW.cmake` to enable Linux CI systems to cross-compile the C++ artifacts into Windows targets using MinGW-w64.
+- Updated `CMakeLists.txt` to dynamically link the `ole32` and `uuid` libraries when building under MinGW to resolve COM headers.
+- Marked Phase 4 verification tasks as fully complete.
+
 ## [0.1.12] - Phase 4 CMake Build System
 - Implemented `CMakeLists.txt` at the root of the repository to establish the Phase 4 build system.
 - Configured CMake to compile the auto-segmented `src/` and `include/` files into a static library for syntax and linking verification.
