@@ -14,4 +14,5 @@
 - [x] Phase 3: Implement C++ structural synthesis (header generation) into `include/` based on inferred types from the decompiled logic. (Implemented in `scripts/synthesize_headers.py`)
 - [x] Phase 4: Implement a build system (CMake/Makefile) to verify the compilability of the reconstructed C++ source code. (Created `CMakeLists.txt`)
 - [x] Phase 4: Identify missing OS headers or libraries necessary to resolve `windows.h` and COM objects during the CI verification process. (Implemented MinGW toolchain linkage via `CMakeToolchain-MinGW.cmake`)
+- [x] Create a master `run_all.sh` orchestrator script to link all 4 phases and provide a single entry point.
 - [x] Draft coding guidelines for the generated C++ (naming conventions, documentation rules). (Created `C_CPP_GUIDELINES.md`)

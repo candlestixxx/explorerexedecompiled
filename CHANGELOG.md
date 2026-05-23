@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.14] - Master Pipeline Execution Script
+- Created `run_all.sh` to sequentially trigger Phase 1 (Ingestion) -> Phase 2 (Decompilation) -> Phase 3 (Refinement/Segmentation) -> Phase 4 (CMake Build).
+- Added an official entry point to process a target binary from start to finish.
+
 ## [0.1.13] - Phase 4 Cross-Compilation CI Workflow
 - Added `CMakeToolchain-MinGW.cmake` to enable Linux CI systems to cross-compile the C++ artifacts into Windows targets using MinGW-w64.
 - Updated `CMakeLists.txt` to dynamically link the `ole32` and `uuid` libraries when building under MinGW to resolve COM headers.
