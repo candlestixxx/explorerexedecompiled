@@ -45,8 +45,11 @@ python3 scripts/decompile.py "$BINARY_PATH" "$DECOMPILED_DIR"
 
 # PHASE 3: Pseudocode Refinement & Modular Segmentation
 echo ""
-echo "[Phase 3] Refining C Pseudocode..."
+echo "[Phase 3] Refining C Pseudocode (Regex Heuristics)..."
 python3 scripts/refine_c.py "$MONOLITHIC_C" "$REFINED_C"
+
+echo "[Phase 3] Flattening AST Control Flow (Removing gotos)..."
+python3 scripts/flatten_cfg.py "$REFINED_C" "$REFINED_C"
 
 echo "[Phase 3] Segmenting into C++ Modules..."
 python3 scripts/segment_c.py "$REFINED_C" "$SRC_DIR"

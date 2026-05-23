@@ -16,5 +16,5 @@
 - [x] Phase 4: Identify missing OS headers or libraries necessary to resolve `windows.h` and COM objects during the CI verification process. (Implemented MinGW toolchain linkage via `CMakeToolchain-MinGW.cmake`)
 - [x] Create a master `run_all.sh` orchestrator script to link all 4 phases and provide a single entry point.
 - [x] Test the master execution pipeline locally against a mock executable to verify structural error handling.
-- [ ] Phase 5: Develop advanced AST parsing (via `libclang` or similar) to structurally flatten `goto` statements rather than simply flagging them via regex.
+- [x] Phase 5: Develop advanced AST parsing (via `libclang` or similar) to structurally flatten `goto` statements rather than simply flagging them via regex. (Implemented in `scripts/flatten_cfg.py`)
 - [x] Draft coding guidelines for the generated C++ (naming conventions, documentation rules). (Created `C_CPP_GUIDELINES.md`)
