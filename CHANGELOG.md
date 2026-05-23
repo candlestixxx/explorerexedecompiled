@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.15] - Master Pipeline Script Hardcoding Fix
+- Updated `run_all.sh` to dynamically resolve output and execution targets using the input binary's `basename`.
+- Ensured the pipeline natively supports targets beyond explicitly named `explorer.exe` binaries.
+
 ## [0.1.14] - Master Pipeline Execution Script
 - Created `run_all.sh` to sequentially trigger Phase 1 (Ingestion) -> Phase 2 (Decompilation) -> Phase 3 (Refinement/Segmentation) -> Phase 4 (CMake Build).
 - Added an official entry point to process a target binary from start to finish.

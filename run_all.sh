@@ -8,14 +8,17 @@ set -e
 # Default directories and files
 BINARY_PATH=$1
 if [ -z "$BINARY_PATH" ]; then
-    echo "Usage: ./run_all.sh <path_to_explorer_exe>"
+    echo "Usage: ./run_all.sh <path_to_binary>"
     exit 1
 fi
 
+# Extract just the filename to handle dynamic paths correctly
+BINARY_NAME=$(basename "$BINARY_PATH")
+
 PDB_DIR="pdbs"
 DECOMPILED_DIR="decompiled"
-MONOLITHIC_C="$DECOMPILED_DIR/explorer.exe_decompiled.c"
-REFINED_C="$DECOMPILED_DIR/explorer.exe_refined.c"
+MONOLITHIC_C="$DECOMPILED_DIR/${BINARY_NAME}_decompiled.c"
+REFINED_C="$DECOMPILED_DIR/${BINARY_NAME}_refined.c"
 SRC_DIR="src"
 INCLUDE_DIR="include"
 
