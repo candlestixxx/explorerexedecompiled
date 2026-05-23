@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.6] - Headless Disassembler Containerization
+- Created a `Dockerfile` configuring OpenJDK 17 and Ghidra 11.0.
+- Established the base environment for reproducible Phase 2 headless decompilation tasks.
+- Updated `TODO.md` outlining the next steps for `scripts/decompile.py`.
+
 ## [0.1.5] - Phase 2 Transition
 - Updated `TODO.md` to formally close out Phase 1 initialization.
 - Added tasks for Phase 2: Dockerizing Ghidra/RetDec and implementing `scripts/decompile.py`.
