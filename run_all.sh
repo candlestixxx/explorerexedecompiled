@@ -6,11 +6,13 @@
 set -e
 
 # Default directories and files
-BINARY_PATH=$1
-if [ -z "$BINARY_PATH" ]; then
+if [ -z "$1" ]; then
     echo "Usage: ./run_all.sh <path_to_binary>"
     exit 1
 fi
+
+# Resolve absolute path before changing directories
+BINARY_PATH=$(realpath "$1")
 
 # Extract just the filename to handle dynamic paths correctly
 BINARY_NAME=$(basename "$BINARY_PATH")

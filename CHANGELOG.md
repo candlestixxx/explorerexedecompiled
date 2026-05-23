@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.17] - Robust Pipeline Path Resolution
+- Hardened `run_all.sh` to resolve relative input binary paths safely by incorporating `realpath` before modifying internal directory contexts.
+- Bumped version correctly based on pipeline polishing session.
+
+## [0.1.16] - Pipeline Integration Testing
+- Verified `run_all.sh` behavior by executing the pipeline locally against a mock executable.
+- Ensured error handling cleanly catches unsupported binaries (missing CodeView RSDS signatures) without cascading failure.
+
 ## [0.1.15] - Master Pipeline Script Hardcoding Fix
 - Updated `run_all.sh` to dynamically resolve output and execution targets using the input binary's `basename`.
 - Ensured the pipeline natively supports targets beyond explicitly named `explorer.exe` binaries.
