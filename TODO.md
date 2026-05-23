@@ -19,3 +19,7 @@
 - [x] Phase 5: Develop advanced AST parsing (via `libclang` or similar) to structurally flatten `goto` statements rather than simply flagging them via regex. (Implemented in `scripts/flatten_cfg.py`)
 - [x] Phase 6: Synthesize C++ basic blocks using libclang to rewrite backward `goto` logic into native `while` loops. (Implemented in `scripts/synthesize_ast_blocks.py`)
 - [x] Draft coding guidelines for the generated C++ (naming conventions, documentation rules). (Created `C_CPP_GUIDELINES.md`)
+
+## Post-1.0 Objectives
+- [ ] Ingest legitimate `explorer.exe` (Windows 10 Build 19045) using the master pipeline script.
+- [ ] Resolve any unexpected AST failure cases that emerge from massive production binaries versus the simple mock C++ tests.
