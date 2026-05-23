@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.12] - Phase 4 CMake Build System
+- Implemented `CMakeLists.txt` at the root of the repository to establish the Phase 4 build system.
+- Configured CMake to compile the auto-segmented `src/` and `include/` files into a static library for syntax and linking verification.
+- Updated `TODO.md` to track build system completion.
+
 ## [0.1.11] - Phase 3 Header Synthesis and Closure
 - Implemented `scripts/synthesize_headers.py` to auto-generate `.h` files from segmented C++ source code.
 - Successfully closed out all Phase 3 tasks.

@@ -12,6 +12,6 @@
 - [x] Phase 3: Develop AST parsing logic to read the dumped C pseudocode from `scripts/DumpC.py` and refine variable naming. (Implemented heuristic regex parsing in `scripts/refine_c.py`)
 - [x] Phase 3: Develop logic to split the monolithic C pseudocode into logical `src/` modules. (Implemented in `scripts/segment_c.py`)
 - [x] Phase 3: Implement C++ structural synthesis (header generation) into `include/` based on inferred types from the decompiled logic. (Implemented in `scripts/synthesize_headers.py`)
-- [ ] Phase 4: Implement a build system (CMake/Makefile) to verify the compilability of the reconstructed C++ source code.
+- [x] Phase 4: Implement a build system (CMake/Makefile) to verify the compilability of the reconstructed C++ source code. (Created `CMakeLists.txt`)
 - [ ] Phase 4: Identify missing OS headers or libraries necessary to resolve `windows.h` and COM objects during the CI verification process.
 - [x] Draft coding guidelines for the generated C++ (naming conventions, documentation rules). (Created `C_CPP_GUIDELINES.md`)
