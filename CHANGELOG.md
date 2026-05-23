@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.10] - Phase 3 Modular Segmentation
+- Implemented `scripts/segment_c.py` to logically split the refined monolithic C output into domain-specific C++ files within the `src/` directory.
+- Updated `TODO.md` to define the final objective of Phase 3 (Header Synthesis).
+
 ## [0.1.9] - Phase 3 Pseudocode Refinement
 - Added `scripts/refine_c.py` to post-process Ghidra's monolithic C output using heuristic regex parsing.
 - Refinement enforces modern C++ casts, normalizes auto-generated variable names, and explicitly flags un-flattened `goto` statements.

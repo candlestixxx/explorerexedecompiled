@@ -1,16 +1,17 @@
 # Session Handoff Log
 
 ## Session Details
-- **Focus**: Tenth session - Phase 3 Pseudocode Refinement.
+- **Focus**: Eleventh session - Phase 3 Modular Segmentation.
 - **Actions Completed**:
-  - Authored `scripts/refine_c.py` to serve as the initial post-processing pipeline for the raw Ghidra C output.
-  - Implemented regular expressions to enforce rules dictated by `C_CPP_GUIDELINES.md`: converting Ghidra variables to snake_case, replacing raw C-casts with `static_cast` and `reinterpret_cast`, and forcefully flagging `goto` statements for structural review.
-  - Tested the script successfully against mock Ghidra output.
-  - Bumped version string to `0.1.9` and documented the progression in `CHANGELOG.md` and `TODO.md`.
+  - Implemented `scripts/segment_c.py` to ingest the refined monolithic pseudocode and split it into multiple `.cpp` files within the `src/` directory.
+  - Utilized regex logic matching function name prefixes (e.g., `CTaskbar_`, `CShellBrowser_`) to bucket functions into logical files like `Taskbar.cpp` and `ShellWindow.cpp`.
+  - Bumped version to `0.1.10` and logged state in `CHANGELOG.md` and `TODO.md`.
 
 ## Findings
-- Pure regex heuristic refinement is brittle but effective for the initial broad-strokes normalization of Ghidra pseudocode. Complete structural control flow flattening (e.g., removing the gotos entirely) will likely require traversing the actual AST utilizing `libclang` or an equivalent parsing library in later stages.
+- The segmentation logic relies entirely on the header markers (`// === ... // Function: Name`) injected during Phase 2 by `DumpC.py`.
+- Unrecognized functions currently fall back into a generic `Misc.cpp` file.
 
 ## Next Steps for Successor Model
-- Proceed with the second half of Phase 3 logic: C++ structural synthesis and file segmentation.
-- Write a script to take the refined `.c` file and segment the functions logically into `src/` files and synthesize the inferred data structures/COM interfaces into corresponding header files inside `include/`.
+- Proceed with the final task of Phase 3: Header Synthesis.
+- Create a script (e.g., `scripts/synthesize_headers.py`) that reads the segmented files in `src/` and generates corresponding `.h`/`.hpp` files in the `include/` directory containing the inferred structs, enums, and class definitions.
+- Once Header Synthesis is complete, Phase 3 is fully operational, and the agent can transition the project into Phase 4 (Compilability & Verification).

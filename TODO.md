@@ -10,5 +10,6 @@
 - [x] Phase 2: Containerize a headless disassembler (Ghidra/RetDec) via Docker to run `scripts/decompile.py` consistently. (Created `Dockerfile` for Ghidra)
 - [x] Phase 2: Refactor `scripts/decompile.py` to execute headless analysis via Docker and dump Intermediate Representation (IR) / ASTs. (Implemented Docker invocation in `scripts/decompile.py` and `scripts/DumpC.py`)
 - [x] Phase 3: Develop AST parsing logic to read the dumped C pseudocode from `scripts/DumpC.py` and refine variable naming. (Implemented heuristic regex parsing in `scripts/refine_c.py`)
-- [ ] Phase 3: Implement C++ structural synthesis (header generation) based on inferred types from the decompiled logic.
+- [x] Phase 3: Develop logic to split the monolithic C pseudocode into logical `src/` modules. (Implemented in `scripts/segment_c.py`)
+- [ ] Phase 3: Implement C++ structural synthesis (header generation) into `include/` based on inferred types from the decompiled logic.
 - [x] Draft coding guidelines for the generated C++ (naming conventions, documentation rules). (Created `C_CPP_GUIDELINES.md`)
