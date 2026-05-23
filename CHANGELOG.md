@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 - Completed final execution of the pipeline orchestration against an empty file proxy for `explorer.exe`, validating robust failure catching by `pefile`.
 - Finalized Phase 1-4 pipeline implementations, logging complete environment readiness in `HANDOFF.md`.
 
+## [1.2.2] - Repository Sanitization Protocol
+- Implemented `sync.sh` to fulfill the "SECTION 2: REPO & GIT SANITIZATION PROTOCOL" directives.
+- Script automatically fetches upstream dependencies, executes intelligent branch merging across features, and recursively updates submodules.
+
 ## [1.2.1] - Infrastructure Verification
 - Verified final execution state of the architecture against dummy payloads.
 - Finalized repository readiness in `TODO.md` and wrapped up the AI autonomous execution session in `HANDOFF.md`.

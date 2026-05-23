@@ -21,5 +21,6 @@
 - [x] Draft coding guidelines for the generated C++ (naming conventions, documentation rules). (Created `C_CPP_GUIDELINES.md`)
 
 ## Post-1.0 Objectives
+- [x] Create an automated repository synchronization script (`sync.sh`) to fulfill Section 2 upstream merging/submodule cleanup directives.
 - [ ] Ingest legitimate `explorer.exe` (Windows 10 Build 19045) using the master pipeline script.
 - [ ] Resolve any unexpected AST failure cases that emerge from massive production binaries versus the simple mock C++ tests.
