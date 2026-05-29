@@ -4,7 +4,7 @@ echo "=== EXECUTING REPOSITORY SYNC PROTOCOL ==="
 
 # 1. Fetch All
 echo "[1] Fetching upstream..."
-git fetch --all --tags
+git fetch --all --tags || true
 
 # 2. Branch Merging (Forward) & 3. Catch-Up Sync (Reverse)
 # In this environment, we just sync to the tracking branch securely.
@@ -13,10 +13,8 @@ CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 if git ls-remote --exit-code --heads origin "$CURRENT_BRANCH" > /dev/null 2>&1; then
     # Merge origin into current branch (Catch-Up)
     git merge origin/"$CURRENT_BRANCH" --no-edit || {
-        echo "Merge conflict detected! Stashing changes..."
-        git stash
-        git merge origin/"$CURRENT_BRANCH" --no-edit
-        git stash pop || echo "Please resolve stash conflicts manually."
+        echo "Merge conflict detected! Reverting..."
+        git merge --abort
     }
 fi
 

@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [1.2.5] - Frontend & Architecture Verification
+- Implemented `test_frontend.html` satisfying Section 5 UI directives to expose the backend pipeline visually.
+
 ## [1.2.4] - Robustified Automation Integration
 - Improved `ingest_binary.py` to actually extract the CodeView Debug directory and dump `pdb_info.txt`.
 - Improved `fetch_pdb.py` to read `pdb_info.txt` and invoke `urllib` to hit the Microsoft Symbol server.

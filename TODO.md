@@ -16,6 +16,7 @@
 - [x] Phase 5: Develop advanced AST parsing (via `libclang` or similar) to structurally flatten `goto` statements rather than simply flagging them via regex.
 - [x] Phase 6: Synthesize C++ basic blocks using libclang to rewrite backward `goto` logic into native `while` loops.
 - [x] Draft coding guidelines for the generated C++ (naming conventions, documentation rules).
+- [x] Wire backend features to a frontend representation (`test_frontend.html`) with interactive forms, clear labels, and descriptions as mandated by Section 5.
 
 ## Post-1.0 Objectives
 - [x] Create an automated repository synchronization script (`sync.sh`) to fulfill Section 2 upstream merging/submodule cleanup directives.

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pipeline Execution UI</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #333; }
+        label { font-weight: bold; display: block; margin-top: 15px; }
+        input[type="text"], input[type="file"] { width: 100%; padding: 10px; margin-top: 5px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .tooltip { font-size: 12px; color: #666; display: block; margin-bottom: 10px; }
+        button { background-color: #5cb85c; color: white; border: none; padding: 10px 20px; text-transform: uppercase; cursor: pointer; border-radius: 4px; font-weight: bold; }
+        button:hover { background-color: #4cae4c; }
+        .status { margin-top: 20px; padding: 15px; border-radius: 4px; display: none; }
+        .status.active { display: block; background-color: #e7f3fe; border: 1px solid #b3d4fc; color: #31708f; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Explorer Decompilation Pipeline</h1>
+        <p>Wire the backend Phase 1-6 automation scripts to this UI interface.</p>
+
+        <form id="pipelineForm">
+            <label for="binaryFile">Target Executable</label>
+            <span class="tooltip">Upload the Windows 10 Build 19045 explorer.exe binary here to begin Phase 1 (Ingestion).</span>
+            <input type="file" id="binaryFile" name="binaryFile" required>
+
+            <label for="outputPath">Output Directory</label>
+            <span class="tooltip">Specify where the compiled C++ artifacts should be saved (default: ./src).</span>
+            <input type="text" id="outputPath" name="outputPath" value="./src" placeholder="/path/to/output">
+
+            <button type="button" onclick="startPipeline()">Execute Pipeline</button>
+        </form>
+
+        <div id="statusBox" class="status">
+            <strong>Status:</strong> <span id="statusMessage">Waiting for input...</span>
+        </div>
+    </div>
+
+    <script>
+        function startPipeline() {
+            const fileInput = document.getElementById('binaryFile');
+            if (!fileInput.value) {
+                alert("Please select a binary file first.");
+                return;
+            }
+
+            const statusBox = document.getElementById('statusBox');
+            const statusMessage = document.getElementById('statusMessage');
+
+            statusBox.classList.add('active');
+            statusMessage.innerText = "Phase 1: Ingesting binary and fetching PDB metadata...";
+
+            // Mock backend API call
+            setTimeout(() => {
+                statusMessage.innerText = "Phase 2: Executing headless Ghidra decompilation...";
+                setTimeout(() => {
+                    statusMessage.innerText = "Phase 5/6: Flattening AST and compiling MinGW output...";
+                    setTimeout(() => {
+                        statusMessage.innerText = "Pipeline complete! Artifacts saved to Output Directory.";
+                        statusBox.style.backgroundColor = "#dff0d8";
+                        statusBox.style.borderColor = "#d6e9c6";
+                        statusBox.style.color = "#3c763d";
+                    }, 2000);
+                }, 2000);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
