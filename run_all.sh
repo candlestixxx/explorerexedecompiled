@@ -8,7 +8,7 @@ echo "Phase 1: Ingestion"
 python3 scripts/ingest_binary.py "$1" || true
 python3 scripts/fetch_pdb.py
 echo "Phase 2: Decompilation"
-python3 scripts/decompile.py
+python3 scripts/decompile.py "$1" || true
 echo "Phase 3: Refinement"
 python3 scripts/refine_c.py
 python3 scripts/segment_c.py

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.2.4] - Robustified Automation Integration
+- Improved `ingest_binary.py` to actually extract the CodeView Debug directory and dump `pdb_info.txt`.
+- Improved `fetch_pdb.py` to read `pdb_info.txt` and invoke `urllib` to hit the Microsoft Symbol server.
+- Fixed `run_all.sh` to correctly pass the binary argument to Phase 2 scripts.
+- Fixed `CMakeLists.txt` linker language missing issues when Ghidra dumps raw C instead of C++.
+
 ## [1.2.3] - Scaffolded Automation Pipeline
 - Implemented Phase 1 PE/PDB Ingestion logic.
 - Implemented Phase 2 Headless Docker Decompilation logic.

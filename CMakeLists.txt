@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(ExplorerDecompiledStatic VERSION 1.2.3 LANGUAGES CXX)
+project(ExplorerDecompiledStatic VERSION 1.2.3 LANGUAGES CXX C)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -14,4 +14,5 @@ if(NOT SRC_FILES)
 endif()
 
 add_library(ExplorerDecompiledStatic STATIC ${SRC_FILES})
+set_target_properties(ExplorerDecompiledStatic PROPERTIES LINKER_LANGUAGE CXX)
 target_link_libraries(ExplorerDecompiledStatic ole32 uuid)
