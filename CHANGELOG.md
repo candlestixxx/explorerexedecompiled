@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [1.2.6] - Compilation Pipeline Hardening
+- Added an initial C++ mock class to `src/test_main.cpp`.
+- Validated that `CMakeLists.txt` builds the `.a` library successfully out of `src/` correctly applying the toolchain configurations.
+
 ## [1.2.5] - Frontend & Architecture Verification
 - Implemented `test_frontend.html` satisfying Section 5 UI directives to expose the backend pipeline visually.
 

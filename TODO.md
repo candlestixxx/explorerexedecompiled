@@ -17,6 +17,7 @@
 - [x] Phase 6: Synthesize C++ basic blocks using libclang to rewrite backward `goto` logic into native `while` loops.
 - [x] Draft coding guidelines for the generated C++ (naming conventions, documentation rules).
 - [x] Wire backend features to a frontend representation (`test_frontend.html`) with interactive forms, clear labels, and descriptions as mandated by Section 5.
+- [x] Verify static library linking with C++ sources using CMake.
 
 ## Post-1.0 Objectives
 - [x] Create an automated repository synchronization script (`sync.sh`) to fulfill Section 2 upstream merging/submodule cleanup directives.
