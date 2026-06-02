@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [1.2.7] - Documentation Polish
+- Explicitly documented cross-compilation execution block within `README.md` to guide future developers attempting to manually rebuild the missing `explorer.exe` C++ sources on Linux using CMake/MinGW.
+
 ## [1.2.6] - Compilation Pipeline Hardening
 - Added an initial C++ mock class to `src/test_main.cpp`.
 - Validated that `CMakeLists.txt` builds the `.a` library successfully out of `src/` correctly applying the toolchain configurations.

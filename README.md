@@ -3,7 +3,16 @@
 An automated 6-phase pipeline utilizing Python, Jython, Docker, CMake, and `libclang` to autonomously extract, decompile, refine, and restructure the Windows `explorer.exe` executable into compilable high-fidelity C++.
 
 ## Project Status
-**Currently blocked**: Awaiting human upload of `explorer.exe` (Windows 10 Build 19045).
+**Currently blocked**: The pipeline orchestrator believes that `explorer.exe` has been successfully decompiled, but the actual output `.cpp` files are completely missing from the environment. Compilation cannot proceed until they are uploaded.
+
+## Compilation Instructions
+Once the decompiled files are placed in `src/` and `include/`, you can cross-compile them using the provided MinGW-w64 CMake configuration:
+
+```bash
+mkdir -p build && cd build
+cmake .. -DCMAKE_TOOLCHAIN_FILE=../CMakeToolchain-MinGW.cmake
+make
+```
 
 ## Pipeline Architecture
 - Phase 1: Ingestion & Symbol Fetching (`pefile`, `urllib`)
