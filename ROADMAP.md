@@ -1,5 +1,7 @@
 # ROADMAP
 
+**NOTE: The project is currently awaiting human ingestion of `explorer.exe` to proceed with full automated testing and pipeline unblocking. All compilation pipelines are defensive placeholders.**
+
 ## Phase 1: Exploration & Triage
 - [x] Create project scaffolding (Governance docs, memory docs).
 - [x] Configure PE extraction (`ingest_binary.py`) and PDB fetching (`fetch_pdb.py`).

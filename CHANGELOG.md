@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [1.2.8] - AI Sync Protocol Execution
+- Triggered `sync.sh` to perform a successful system sync and merge.
+- Verified that branches were already up-to-date and completed a version bump.
+- Added notes that we are blocked awaiting the human upload of the actual executable.
+
 ## [1.2.7] - Documentation Polish
 - Explicitly documented cross-compilation execution block within `README.md` to guide future developers attempting to manually rebuild the missing `explorer.exe` C++ sources on Linux using CMake/MinGW.
 

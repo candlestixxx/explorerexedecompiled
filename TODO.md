@@ -23,3 +23,6 @@
 - [x] Create an automated repository synchronization script (`sync.sh`) to fulfill Section 2 upstream merging/submodule cleanup directives.
 - [ ] Ingest legitimate `explorer.exe` (Windows 10 Build 19045) using the master pipeline script.
 - [ ] Resolve any unexpected AST failure cases that emerge from massive production binaries versus the simple mock C++ tests.
+
+## Human Unblocking Needed
+- [ ] Awaiting human upload of the actual 'explorer.exe' binary to unblock the decompilation pipeline and testing processes.
