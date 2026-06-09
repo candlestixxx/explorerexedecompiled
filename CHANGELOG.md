@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [1.2.8] - Resynchronization Execution
+- Triggered automated `sync.sh` resolution to pull upstream changes and manage stash workflows per updated protocols. No compilation action taken due to missing source files.
+
 ## [1.2.7] - Documentation Polish
 - Explicitly documented cross-compilation execution block within `README.md` to guide future developers attempting to manually rebuild the missing `explorer.exe` C++ sources on Linux using CMake/MinGW.
 
