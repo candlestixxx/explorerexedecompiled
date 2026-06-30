@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [1.2.12] - Automated Post-Decompilation Analysis
+- Created `scripts/post_analysis.py` to automatically evaluate pipeline output artifacts for size constraints and placeholder anomalies.
+- Updated the autonomous background monitor (`monitor.sh`) to automatically trigger post-analysis logic the moment `run_all.sh` completes execution.
+
 ## [1.2.11] - Pipeline End-to-End Verification
 - Autonomously verified the master pipeline (`run_all.sh`) via the background monitor script using the synthesized placeholder PE binary.
 - Documented post-run pipeline status and confirmed decompilation output perfectly matches the expected mock stub (`post_run_status.md`).

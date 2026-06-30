@@ -16,5 +16,6 @@
 
 ## Next Steps for Successor Model
 - The pipeline architecture is fully verified from Phase 1 through Phase 6 with mock data.
-- The environment is ready for the real Windows 10 `explorer.exe`. Once injected, the pipeline will process it natively.
-- No further action required on mock data. Await real binaries to proceed with actual reverse engineering and symbol recovery.
+- Automated anomaly detection (`scripts/post_analysis.py`) is now wired directly into the background execution monitor (`monitor.sh`).
+- The environment is ready for the real Windows 10 `explorer.exe`. Once injected into `input/`, the system will autonomously decompile it, execute anomaly analysis, and generate a final status report without any human prompts required.
+- **Stand by** for manual human injection of the binary. No further configuration is necessary.
