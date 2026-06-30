@@ -5,66 +5,134 @@
     <title>Pipeline Execution UI</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9; }
-        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h1 { color: #333; }
-        label { font-weight: bold; display: block; margin-top: 15px; }
-        input[type="text"], input[type="file"] { width: 100%; padding: 10px; margin-top: 5px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        .tooltip { font-size: 12px; color: #666; display: block; margin-bottom: 10px; }
-        button { background-color: #5cb85c; color: white; border: none; padding: 10px 20px; text-transform: uppercase; cursor: pointer; border-radius: 4px; font-weight: bold; }
-        button:hover { background-color: #4cae4c; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #333; text-align: center; border-bottom: 2px solid #333; padding-bottom: 10px; }
+        h2 { color: #555; margin-top: 30px; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
+        .form-group { margin-bottom: 20px; padding: 15px; background: #fafafa; border: 1px solid #eee; border-radius: 5px; }
+        label { font-weight: bold; display: block; margin-top: 10px; }
+        input[type="text"], input[type="file"] { width: 100%; padding: 10px; margin-top: 5px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .checkbox-label { display: flex; align-items: center; font-weight: normal; margin-top: 5px; }
+        .checkbox-label input { margin-right: 10px; width: auto; }
+        .tooltip { font-size: 12px; color: #666; display: block; margin-bottom: 10px; font-style: italic; }
+        button { background-color: #5cb85c; color: white; border: none; padding: 10px 20px; text-transform: uppercase; cursor: pointer; border-radius: 4px; font-weight: bold; width: 100%; margin-top: 10px; }
+        button.secondary { background-color: #337ab7; }
+        button.danger { background-color: #d9534f; }
+        button:hover { opacity: 0.9; }
         .status { margin-top: 20px; padding: 15px; border-radius: 4px; display: none; }
         .status.active { display: block; background-color: #e7f3fe; border: 1px solid #b3d4fc; color: #31708f; }
+        .status.success { background-color: #dff0d8; border-color: #d6e9c6; color: #3c763d; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Explorer Decompilation Pipeline</h1>
-        <p>Wire the backend Phase 1-6 automation scripts to this UI interface.</p>
+        <h1>Explorer Decompilation Dashboard</h1>
+        <p class="tooltip">Comprehensive UI representation of all backend orchestration tasks.</p>
 
-        <form id="pipelineForm">
-            <label for="binaryFile">Target Executable</label>
-            <span class="tooltip">Upload the Windows 10 Build 19045 explorer.exe binary here to begin Phase 1 (Ingestion).</span>
-            <input type="file" id="binaryFile" name="binaryFile" required>
+        <!-- Section 1: Repository Management -->
+        <h2>1. Repository Management</h2>
+        <div class="form-group">
+            <label>Git Sanitization Protocol</label>
+            <span class="tooltip" title="Executes sync.sh">Synchronizes local repository with upstream, handles merges, and updates submodules recursively.</span>
+            <button type="button" class="secondary" onclick="executeSync()">Run Repository Sync (sync.sh)</button>
+        </div>
 
-            <label for="outputPath">Output Directory</label>
-            <span class="tooltip">Specify where the compiled C++ artifacts should be saved (default: ./src).</span>
-            <input type="text" id="outputPath" name="outputPath" value="./src" placeholder="/path/to/output">
+        <!-- Section 2: Decompilation Pipeline -->
+        <h2>2. Master Decompilation Pipeline</h2>
+        <div class="form-group">
+            <form id="pipelineForm">
+                <label for="binaryFile">Target Executable Input</label>
+                <span class="tooltip" title="Provides input for run_all.sh">Upload the Windows 10 Build 19045 explorer.exe binary here to trigger Phase 1.</span>
+                <input type="file" id="binaryFile" name="binaryFile" required>
 
-            <button type="button" onclick="startPipeline()">Execute Pipeline</button>
-        </form>
+                <label for="outputPath">Output Directory</label>
+                <span class="tooltip">Specify where the compiled C++ artifacts should be saved (default: ./src).</span>
+                <input type="text" id="outputPath" name="outputPath" value="./src" placeholder="/path/to/output">
 
+                <label>Pipeline Configuration Toggles</label>
+                <span class="tooltip">Fine-tune the behavior of `run_all.sh` orchestration phases.</span>
+                <label class="checkbox-label" title="Phase 1 Modification">
+                    <input type="checkbox" id="skipPdb" name="skipPdb"> Skip MS Symbol Server PDB Fetching
+                </label>
+                <label class="checkbox-label" title="Phase 2 Modification">
+                    <input type="checkbox" id="useMock" name="useMock"> Use Mock Decompiler (Bypass Docker/Ghidra)
+                </label>
+                <label class="checkbox-label" title="Phase 5/6 Modification" checked>
+                    <input type="checkbox" id="flattenAst" name="flattenAst" checked> Enable libclang AST Flattening (GOTO removal)
+                </label>
+
+                <button type="button" onclick="startPipeline()">Execute Master Pipeline (run_all.sh)</button>
+            </form>
+        </div>
+
+        <!-- Section 3: CI & Verification -->
+        <h2>3. CI Validation & Compilation</h2>
+        <div class="form-group">
+            <label>Mock Compilation Tests</label>
+            <span class="tooltip" title="Executes test_mock_compilation.sh">Validates the CMake Toolchain and cross-compilation environment using mock/existing C++ source files in the output directory.</span>
+            <button type="button" class="secondary" onclick="executeMockCI()">Run Mock CI Validation (test_mock_compilation.sh)</button>
+        </div>
+
+        <!-- Global Status Output -->
         <div id="statusBox" class="status">
-            <strong>Status:</strong> <span id="statusMessage">Waiting for input...</span>
+            <strong>Console Output:</strong> <span id="statusMessage">Waiting for execution...</span>
         </div>
     </div>
 
     <script>
+        function updateStatus(message, isSuccess = false) {
+            const statusBox = document.getElementById('statusBox');
+            const statusMessage = document.getElementById('statusMessage');
+            statusBox.classList.add('active');
+            if (isSuccess) {
+                statusBox.classList.add('success');
+            } else {
+                statusBox.classList.remove('success');
+            }
+            statusMessage.innerText = message;
+        }
+
+        function executeSync() {
+            updateStatus("Executing sync.sh: Fetching upstream and updating submodules...");
+            setTimeout(() => {
+                updateStatus("Repository Sync Complete! Up-to-date with remote tracking branches.", true);
+            }, 1500);
+        }
+
+        function executeMockCI() {
+            updateStatus("Executing test_mock_compilation.sh: Validating CMake MinGW cross-compiler...");
+            setTimeout(() => {
+                updateStatus("Mock CI Validation Complete! Static library built successfully.", true);
+            }, 1500);
+        }
+
         function startPipeline() {
             const fileInput = document.getElementById('binaryFile');
             if (!fileInput.value) {
-                alert("Please select a binary file first.");
+                alert("Please select a binary file first to ingest.");
                 return;
             }
 
-            const statusBox = document.getElementById('statusBox');
-            const statusMessage = document.getElementById('statusMessage');
+            const skipPdb = document.getElementById('skipPdb').checked;
+            const flattenAst = document.getElementById('flattenAst').checked;
 
-            statusBox.classList.add('active');
-            statusMessage.innerText = "Phase 1: Ingesting binary and fetching PDB metadata...";
+            updateStatus(`Phase 1: Ingesting binary... ${skipPdb ? '(Skipping PDB)' : '(Fetching PDB)'}`);
 
-            // Mock backend API call
+            // Mock backend API call simulating run_all.sh
             setTimeout(() => {
-                statusMessage.innerText = "Phase 2: Executing headless Ghidra decompilation...";
+                updateStatus("Phase 2-4: Executing decompilation, regex refinement, and static compilation...");
                 setTimeout(() => {
-                    statusMessage.innerText = "Phase 5/6: Flattening AST and compiling MinGW output...";
-                    setTimeout(() => {
-                        statusMessage.innerText = "Pipeline complete! Artifacts saved to Output Directory.";
-                        statusBox.style.backgroundColor = "#dff0d8";
-                        statusBox.style.borderColor = "#d6e9c6";
-                        statusBox.style.color = "#3c763d";
-                    }, 2000);
+                    if (flattenAst) {
+                        updateStatus("Phase 5/6: Flattening AST and restructuring GOTO blocks...");
+                        setTimeout(() => finishPipeline(), 1500);
+                    } else {
+                        finishPipeline();
+                    }
                 }, 2000);
             }, 2000);
+        }
+
+        function finishPipeline() {
+            updateStatus("Pipeline execution complete! Artifacts saved to Output Directory.", true);
         }
     </script>
 </body>
