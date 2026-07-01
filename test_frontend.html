@@ -5,66 +5,203 @@
     <title>Pipeline Execution UI</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9; }
-        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h1 { color: #333; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
+        h1 { color: #333; border-bottom: 2px solid #5cb85c; padding-bottom: 10px;}
+        h2 { color: #555; margin-top: 25px; border-bottom: 1px solid #ddd; padding-bottom: 5px;}
         label { font-weight: bold; display: block; margin-top: 15px; }
-        input[type="text"], input[type="file"] { width: 100%; padding: 10px; margin-top: 5px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        .tooltip { font-size: 12px; color: #666; display: block; margin-bottom: 10px; }
-        button { background-color: #5cb85c; color: white; border: none; padding: 10px 20px; text-transform: uppercase; cursor: pointer; border-radius: 4px; font-weight: bold; }
+        input[type="text"], input[type="file"] { width: 100%; padding: 10px; margin-top: 5px; margin-bottom: 5px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .checkbox-container { display: flex; align-items: center; margin-top: 10px; }
+        .checkbox-container input[type="checkbox"] { margin-right: 10px; width: 18px; height: 18px; }
+        .checkbox-container label { margin-top: 0; font-weight: normal; }
+        .tooltip { font-size: 12px; color: #666; display: block; margin-bottom: 15px; font-style: italic;}
+        .inline-tooltip { font-size: 11px; color: #888; margin-left: 28px; display: block; font-style: italic;}
+        button { background-color: #5cb85c; color: white; border: none; padding: 12px 25px; text-transform: uppercase; cursor: pointer; border-radius: 4px; font-weight: bold; font-size: 16px; margin-top: 20px; width: 100%;}
         button:hover { background-color: #4cae4c; }
         .status { margin-top: 20px; padding: 15px; border-radius: 4px; display: none; }
         .status.active { display: block; background-color: #e7f3fe; border: 1px solid #b3d4fc; color: #31708f; }
+        .log-container { background: #1e1e1e; color: #00ff00; font-family: monospace; padding: 10px; margin-top: 10px; border-radius: 4px; height: 150px; overflow-y: scroll; display: none;}
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Explorer Decompilation Pipeline</h1>
-        <p>Wire the backend Phase 1-6 automation scripts to this UI interface.</p>
+        <h1>Explorer Decompilation Pipeline Orchestrator</h1>
+        <p>Wire the backend Phase 0-8 automation scripts to this UI interface.</p>
 
         <form id="pipelineForm">
+            <h2>1. Input Selection</h2>
             <label for="binaryFile">Target Executable</label>
-            <span class="tooltip">Upload the Windows 10 Build 19045 explorer.exe binary here to begin Phase 1 (Ingestion).</span>
             <input type="file" id="binaryFile" name="binaryFile" required>
+            <span class="tooltip">Upload the Windows 10 Build 19045 explorer.exe binary here to begin Phase 1 (Ingestion).</span>
 
             <label for="outputPath">Output Directory</label>
-            <span class="tooltip">Specify where the compiled C++ artifacts should be saved (default: ./src).</span>
             <input type="text" id="outputPath" name="outputPath" value="./src" placeholder="/path/to/output">
+            <span class="tooltip">Specify where the compiled artifacts and headers should be saved (default: ./src).</span>
+
+            <h2>2. Pipeline Configuration</h2>
+
+            <div class="checkbox-container">
+                <input type="checkbox" id="phase0" checked disabled>
+                <label for="phase0"><strong>Phase 0:</strong> Strict Environment Validation</label>
+            </div>
+            <span class="inline-tooltip">Mandatory. Asserts pefile, clang.cindex, cmake, and MinGW-w64 are available.</span>
+
+            <div class="checkbox-container">
+                <input type="checkbox" id="phase1" checked>
+                <label for="phase1"><strong>Phase 1:</strong> Fetch PDB Symbols</label>
+            </div>
+            <span class="inline-tooltip">Queries the Microsoft Symbol Server using the CodeView GUID/Age.</span>
+
+            <div class="checkbox-container">
+                <input type="checkbox" id="phase2" checked>
+                <label for="phase2"><strong>Phase 2:</strong> Headless Decompilation (Ghidra)</label>
+            </div>
+            <span class="inline-tooltip">Executes the dockerized Java disassembler to rip raw C output.</span>
+
+            <div class="checkbox-container">
+                <input type="checkbox" id="phase3" checked>
+                <label for="phase3"><strong>Phase 3:</strong> Module Segmentation & Header Synthesis</label>
+            </div>
+            <span class="inline-tooltip">Splits the monolithic pseudocode into logical .cpp and .h components.</span>
+
+            <div class="checkbox-container">
+                <input type="checkbox" id="phase4" checked>
+                <label for="phase4"><strong>Phase 4:</strong> MinGW-w64 Cross Compilation</label>
+            </div>
+            <span class="inline-tooltip">Verifies artifact compilability using CMake against Windows COM headers.</span>
+
+            <div class="checkbox-container">
+                <input type="checkbox" id="phase56" checked>
+                <label for="phase56"><strong>Phase 5/6:</strong> AST Flatting & While-Loop Synthesis</label>
+            </div>
+            <span class="inline-tooltip">Utilizes libclang to parse the AST and rewrite backward GOTOs into structured loops.</span>
+
+            <div class="checkbox-container">
+                <input type="checkbox" id="phase7">
+                <label for="phase7"><strong>Phase 7:</strong> Rust Transpilation (Experimental)</label>
+            </div>
+            <span class="inline-tooltip">Translates the extracted C AST into unsafe Rust FFI bindings.</span>
+
+            <div class="checkbox-container">
+                <input type="checkbox" id="phase8">
+                <label for="phase8"><strong>Phase 8:</strong> Generate Custom Shell (Experimental)</label>
+            </div>
+            <span class="inline-tooltip">Compiles a specialized lightweight kiosk shell stripping unnecessary components.</span>
+
+            <div class="checkbox-container">
+                <input type="checkbox" id="phase9">
+                <label for="phase9"><strong>Phase 9:</strong> Plugin Architecture (Experimental)</label>
+            </div>
+            <span class="inline-tooltip">Refactors monolithic shell into hot-swappable plugins.</span>
 
             <button type="button" onclick="startPipeline()">Execute Pipeline</button>
         </form>
 
         <div id="statusBox" class="status">
-            <strong>Status:</strong> <span id="statusMessage">Waiting for input...</span>
+            <strong>Current Execution Status:</strong> <span id="statusMessage">Waiting to begin...</span>
+            <div id="logConsole" class="log-container"></div>
         </div>
     </div>
 
     <script>
+        function logMsg(msg) {
+            const console = document.getElementById('logConsole');
+            console.innerHTML += `> ${msg}<br>`;
+            console.scrollTop = console.scrollHeight;
+        }
+
         function startPipeline() {
             const fileInput = document.getElementById('binaryFile');
+            const runRust = document.getElementById('phase7').checked;
+            const runShell = document.getElementById('phase8').checked;
+            const runPlugin = document.getElementById('phase9').checked;
+
             if (!fileInput.value) {
-                alert("Please select a binary file first.");
+                alert("Please select a valid PE binary file first.");
                 return;
             }
 
             const statusBox = document.getElementById('statusBox');
             const statusMessage = document.getElementById('statusMessage');
+            const logConsole = document.getElementById('logConsole');
 
             statusBox.classList.add('active');
-            statusMessage.innerText = "Phase 1: Ingesting binary and fetching PDB metadata...";
+            logConsole.style.display = 'block';
+            logConsole.innerHTML = '';
 
-            // Mock backend API call
+            logMsg("Initializing pipeline...");
+
+            // Mock sequence mapped to run_all.sh phases
+            setTimeout(() => {
+                statusMessage.innerText = "Phase 0: Validating Environment...";
+                logMsg("[OK] Python module 'pefile' is installed.");
+                logMsg("[OK] System binary 'x86_64-w64-mingw32-gcc' found in PATH.");
+            }, 1000);
+
+            setTimeout(() => {
+                statusMessage.innerText = "Phase 1: Ingesting binary and fetching PDB metadata...";
+                logMsg("SHA256: 4b9d880aac1aadc3e491d6bb37006c6c941675aec82f4b93ea06ef29994ad641");
+                logMsg("PE Header parsed successfully.");
+            }, 3000);
+
             setTimeout(() => {
                 statusMessage.innerText = "Phase 2: Executing headless Ghidra decompilation...";
+                logMsg("Orchestrating Dockerized headless decompilation...");
+                logMsg("Decompilation complete. Output saved to src/monolithic_output.c");
+            }, 5000);
+
+            setTimeout(() => {
+                statusMessage.innerText = "Phase 3 & 4: Refining C macros and cross-compiling...";
+                logMsg("Segmenting C output into src modules...");
+                logMsg("Building CXX object CMakeFiles/ExplorerDecompiledStatic.dir/src/monolithic_output.c.obj");
+                logMsg("Built target ExplorerDecompiledStatic");
+            }, 7000);
+
+            setTimeout(() => {
+                statusMessage.innerText = "Phase 5/6: Flattening AST and Synthesizing Loops...";
+                logMsg("Flattening CFG (AST)... Found function: main");
+                logMsg("Mock: Rewriting goto L_1 into while block...");
+            }, 9000);
+
+            let completionTime = 11000;
+
+            if (runRust) {
                 setTimeout(() => {
-                    statusMessage.innerText = "Phase 5/6: Flattening AST and compiling MinGW output...";
-                    setTimeout(() => {
-                        statusMessage.innerText = "Pipeline complete! Artifacts saved to Output Directory.";
-                        statusBox.style.backgroundColor = "#dff0d8";
-                        statusBox.style.borderColor = "#d6e9c6";
-                        statusBox.style.color = "#3c763d";
-                    }, 2000);
-                }, 2000);
-            }, 2000);
+                    statusMessage.innerText = "Phase 7: Rust Transpilation...";
+                    logMsg("Transpiling AST to Rust...");
+                    logMsg("Mock: Generating unsafe Rust FFI bindings...");
+                }, completionTime);
+                completionTime += 2000;
+            }
+
+            if (runShell) {
+                setTimeout(() => {
+                    statusMessage.innerText = "Phase 8: Generating Custom Shell...";
+                    logMsg("Generating Custom Shell Variations...");
+                    logMsg("Mock: Stripping unnecessary components (Cortana, Search, Action Center)...");
+                    logMsg("Mock: Successfully generated kiosk_shell.exe (simulated)");
+                }, completionTime);
+                completionTime += 2000;
+            }
+
+            if (runPlugin) {
+                setTimeout(() => {
+                    statusMessage.innerText = "Phase 9: Generating Plugin Architecture...";
+                    logMsg("Generating Plugin Architecture...");
+                    logMsg("Mock: Refactoring monolithic code into modular plugins...");
+                    logMsg("Mock: Synthesizing dynamic library interfaces (.dll/.so)...");
+                    logMsg("Mock: Successfully generated plugin-based shell architecture (simulated)");
+                }, completionTime);
+                completionTime += 2000;
+            }
+
+            setTimeout(() => {
+                statusMessage.innerText = "Pipeline complete! Artifacts verified.";
+                logMsg("Pipeline complete.");
+                logMsg("Executing Post-Analysis Anomaly Detection...");
+                statusBox.style.backgroundColor = "#dff0d8";
+                statusBox.style.borderColor = "#d6e9c6";
+                statusBox.style.color = "#3c763d";
+            }, completionTime);
         }
     </script>
 </body>

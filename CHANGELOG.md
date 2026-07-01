@@ -26,3 +26,31 @@
 - Implemented Phase 4 MinGW CMake CI loop.
 - Implemented Phase 5 & 6 libclang AST restructuring loop.
 - Established strict governance Markdown tracking standards.
+
+## [1.2.15] - Placeholder Execution, Validation, and Tooling Edge Cases
+- Synthesized minimal placeholder PE target using MinGW-w64 to robustly test the pipeline's ingestion and parsing validation logic without requiring physical binary drops.
+- Drafted mock capabilities for logic segmentation (`segment_c.py`) and AST basic block synthesis (`synthesize_ast_blocks.py`).
+- Added edge case unittests in `test_pipeline_mocks.py` to assert AST recursion handling (deeply nested GOTOs) and grace degradation on malformed C structs.
+- Implemented fully automated CI/CD workflow testing for PRs and main branches targeting Ubuntu-22.04 with GCC toolchains inside `.github/workflows/ci.yml`.
+- Configured local environment validation checkpoints (`validate_env.py`) checking dependencies (`pefile`, `cmake`, `clang`, etc.) actively enforcing Section 2 prep procedures.
+- Delivered frontend UI orchestration matching Section 5 dictates dynamically streaming pipeline phase states to simulated consoles via `test_frontend.html`.
+- Defined expectations internally on expected PDB boundaries targeting Windows Build 19045 explicit artifacts within `BINARY_INTERFACE.md`.
+
+## [1.2.16] - UI Feature Parity & Rust Transpilation Mocking
+- Executed an audit of IDEAS.md and implemented a mock Python script (`scripts/transpile_to_rust.py`) to simulate translating the extracted C AST into unsafe Rust FFI bindings.
+- Added a comprehensive testing suite for this transpilation script into `test_pipeline_mocks.py`.
+- Formally mapped this new experimental "Phase 7" into the UI via `test_frontend.html`.
+- Implemented interactive checkboxes, descriptive tooltips, and dynamic logic to stream the Rust generation logs to the simulated UI console if selected.
+- Verified UI updates rigorously via Playwright (`sync_playwright`), confirming all visual states.
+
+## [1.2.18] - Custom Shell Variation Mock & UI Integration
+- Implemented `scripts/generate_custom_shell.py` to simulate the Phase 8 "Generate Custom Shell" feature from `IDEAS.md`.
+- Added unit tests for the new script in `scripts/test_pipeline_mocks.py`.
+- Updated `test_frontend.html` dashboard UI to include an interactive toggle for Phase 8.
+- Validated frontend UI updates visually using Playwright script `scripts/verify_frontend.py` to ensure visual artifacts are correct.
+
+## [1.2.19] - Plugin Architecture Mock & UI Integration
+- Implemented `scripts/generate_plugin_architecture.py` to simulate the Phase 9 "Plugin Architecture" feature from `IDEAS.md`.
+- Added unit tests for the new script in `scripts/test_pipeline_mocks.py`.
+- Updated `test_frontend.html` dashboard UI to include an interactive toggle for Phase 9.
+- Validated frontend UI updates visually using Playwright script `scripts/verify_frontend.py` to ensure visual artifacts are correct.

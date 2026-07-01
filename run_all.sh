@@ -1,5 +1,9 @@
 #!/bin/bash
 set -e
+
+echo "Phase 0: Environment Validation"
+python3 scripts/validate_env.py
+
 if [ -z "$1" ]; then
     echo "Usage: ./run_all.sh <binary_path>"
     # removed exit 1 to prevent blocking
