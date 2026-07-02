@@ -25,7 +25,7 @@
 <body>
     <div class="container">
         <h1>Explorer Decompilation Pipeline Orchestrator</h1>
-        <p>Wire the backend Phase 0-8 automation scripts to this UI interface.</p>
+        <p>Wire the backend Phase 0-12 automation scripts to this UI interface.</p>
 
         <form id="pipelineForm">
             <h2>1. Input Selection</h2>
@@ -93,6 +93,24 @@
             </div>
             <span class="inline-tooltip">Refactors monolithic shell into hot-swappable plugins.</span>
 
+            <div class="checkbox-container">
+                <input type="checkbox" id="phase10">
+                <label for="phase10"><strong>Phase 10:</strong> AST Graph Visualization (Debugging)</label>
+            </div>
+            <span class="inline-tooltip">Exports the in-memory parsed control flow as a .dot graph file.</span>
+
+            <div class="checkbox-container">
+                <input type="checkbox" id="phase11">
+                <label for="phase11"><strong>Phase 11:</strong> Automated Vulnerability Scanning (Experimental)</label>
+            </div>
+            <span class="inline-tooltip">Performs static analysis on generated C++ to identify memory and logic flaws.</span>
+
+            <div class="checkbox-container">
+                <input type="checkbox" id="phase12">
+                <label for="phase12"><strong>Phase 12:</strong> AI Code Summarization (Experimental)</label>
+            </div>
+            <span class="inline-tooltip">Utilizes an LLM to automatically generate human-readable docstrings for decompiled functions.</span>
+
             <button type="button" onclick="startPipeline()">Execute Pipeline</button>
         </form>
 
@@ -111,9 +129,17 @@
 
         function startPipeline() {
             const fileInput = document.getElementById('binaryFile');
+            const runPhase1 = document.getElementById('phase1').checked;
+            const runPhase2 = document.getElementById('phase2').checked;
+            const runPhase3 = document.getElementById('phase3').checked;
+            const runPhase4 = document.getElementById('phase4').checked;
+            const runPhase56 = document.getElementById('phase56').checked;
             const runRust = document.getElementById('phase7').checked;
             const runShell = document.getElementById('phase8').checked;
             const runPlugin = document.getElementById('phase9').checked;
+            const runGraph = document.getElementById('phase10').checked;
+            const runVuln = document.getElementById('phase11').checked;
+            const runAI = document.getElementById('phase12').checked;
 
             if (!fileInput.value) {
                 alert("Please select a valid PE binary file first.");
@@ -130,39 +156,73 @@
 
             logMsg("Initializing pipeline...");
 
-            // Mock sequence mapped to run_all.sh phases
+            // Phase 0 is mandatory
+            let completionTime = 1000;
             setTimeout(() => {
                 statusMessage.innerText = "Phase 0: Validating Environment...";
                 logMsg("[OK] Python module 'pefile' is installed.");
                 logMsg("[OK] System binary 'x86_64-w64-mingw32-gcc' found in PATH.");
-            }, 1000);
+            }, completionTime);
+            completionTime += 2000;
 
-            setTimeout(() => {
-                statusMessage.innerText = "Phase 1: Ingesting binary and fetching PDB metadata...";
-                logMsg("SHA256: 4b9d880aac1aadc3e491d6bb37006c6c941675aec82f4b93ea06ef29994ad641");
-                logMsg("PE Header parsed successfully.");
-            }, 3000);
+            if (runPhase1) {
+                setTimeout(() => {
+                    statusMessage.innerText = "Phase 1: Ingesting binary and fetching PDB metadata...";
+                    logMsg("SHA256: 4b9d880aac1aadc3e491d6bb37006c6c941675aec82f4b93ea06ef29994ad641");
+                    logMsg("PE Header parsed successfully.");
+                }, completionTime);
+                completionTime += 2000;
+            } else {
+                setTimeout(() => { logMsg("Skipping Phase 1..."); }, completionTime);
+                completionTime += 500;
+            }
 
-            setTimeout(() => {
-                statusMessage.innerText = "Phase 2: Executing headless Ghidra decompilation...";
-                logMsg("Orchestrating Dockerized headless decompilation...");
-                logMsg("Decompilation complete. Output saved to src/monolithic_output.c");
-            }, 5000);
+            if (runPhase2) {
+                setTimeout(() => {
+                    statusMessage.innerText = "Phase 2: Executing headless Ghidra decompilation...";
+                    logMsg("Orchestrating Dockerized headless decompilation...");
+                    logMsg("Decompilation complete. Output saved to src/monolithic_output.c");
+                }, completionTime);
+                completionTime += 2000;
+            } else {
+                setTimeout(() => { logMsg("Skipping Phase 2..."); }, completionTime);
+                completionTime += 500;
+            }
 
-            setTimeout(() => {
-                statusMessage.innerText = "Phase 3 & 4: Refining C macros and cross-compiling...";
-                logMsg("Segmenting C output into src modules...");
-                logMsg("Building CXX object CMakeFiles/ExplorerDecompiledStatic.dir/src/monolithic_output.c.obj");
-                logMsg("Built target ExplorerDecompiledStatic");
-            }, 7000);
+            if (runPhase3) {
+                setTimeout(() => {
+                    statusMessage.innerText = "Phase 3: Module Segmentation & Header Synthesis...";
+                    logMsg("Segmenting C output into src modules...");
+                }, completionTime);
+                completionTime += 2000;
+            } else {
+                setTimeout(() => { logMsg("Skipping Phase 3..."); }, completionTime);
+                completionTime += 500;
+            }
 
-            setTimeout(() => {
-                statusMessage.innerText = "Phase 5/6: Flattening AST and Synthesizing Loops...";
-                logMsg("Flattening CFG (AST)... Found function: main");
-                logMsg("Mock: Rewriting goto L_1 into while block...");
-            }, 9000);
+            if (runPhase4) {
+                setTimeout(() => {
+                    statusMessage.innerText = "Phase 4: MinGW-w64 Cross Compilation...";
+                    logMsg("Building CXX object CMakeFiles/ExplorerDecompiledStatic.dir/src/monolithic_output.c.obj");
+                    logMsg("Built target ExplorerDecompiledStatic");
+                }, completionTime);
+                completionTime += 2000;
+            } else {
+                setTimeout(() => { logMsg("Skipping Phase 4..."); }, completionTime);
+                completionTime += 500;
+            }
 
-            let completionTime = 11000;
+            if (runPhase56) {
+                setTimeout(() => {
+                    statusMessage.innerText = "Phase 5/6: Flattening AST and Synthesizing Loops...";
+                    logMsg("Flattening CFG (AST)... Found function: main");
+                    logMsg("Mock: Rewriting goto L_1 into while block...");
+                }, completionTime);
+                completionTime += 2000;
+            } else {
+                setTimeout(() => { logMsg("Skipping Phase 5/6..."); }, completionTime);
+                completionTime += 500;
+            }
 
             if (runRust) {
                 setTimeout(() => {
@@ -190,6 +250,39 @@
                     logMsg("Mock: Refactoring monolithic code into modular plugins...");
                     logMsg("Mock: Synthesizing dynamic library interfaces (.dll/.so)...");
                     logMsg("Mock: Successfully generated plugin-based shell architecture (simulated)");
+                }, completionTime);
+                completionTime += 2000;
+            }
+
+            if (runGraph) {
+                setTimeout(() => {
+                    statusMessage.innerText = "Phase 10: Generating AST Graph...";
+                    logMsg("Generating AST Visualization Graph...");
+                    logMsg("Mock: Traversing in-memory C++ syntax tree...");
+                    logMsg("Mock: Extracting control flow basic blocks...");
+                    logMsg("Mock: Exporting graph to output/ast_graph.dot");
+                }, completionTime);
+                completionTime += 2000;
+            }
+
+            if (runVuln) {
+                setTimeout(() => {
+                    statusMessage.innerText = "Phase 11: Generating Vulnerability Report...";
+                    logMsg("Generating Vulnerability Report...");
+                    logMsg("Mock: Running static analysis on decompiled C++ source...");
+                    logMsg("Mock: Scanning for buffer overflows, use-after-free, and format string bugs...");
+                    logMsg("Mock: Exporting findings to output/vulnerability_report.json");
+                }, completionTime);
+                completionTime += 2000;
+            }
+
+            if (runAI) {
+                setTimeout(() => {
+                    statusMessage.innerText = "Phase 12: Generating AI Code Summaries...";
+                    logMsg("Generating AI Code Summaries...");
+                    logMsg("Mock: Initializing local LLM context window...");
+                    logMsg("Mock: Analyzing decompiled function semantics...");
+                    logMsg("Mock: Injected human-readable docstrings into src/ output.");
                 }, completionTime);
                 completionTime += 2000;
             }

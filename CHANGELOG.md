@@ -54,3 +54,25 @@
 - Added unit tests for the new script in `scripts/test_pipeline_mocks.py`.
 - Updated `test_frontend.html` dashboard UI to include an interactive toggle for Phase 9.
 - Validated frontend UI updates visually using Playwright script `scripts/verify_frontend.py` to ensure visual artifacts are correct.
+
+## [1.2.20] - AST Graph Visualization Mock & Flattener Polish
+- Refined `scripts/flatten_cfg.py` by implementing a recursive AST traversal function `recursive_flatten` to find explicitly declared GOTOs and labels to prepare for restructuring into basic blocks.
+- Implemented `scripts/generate_ast_graph.py` to simulate a new "Phase 10: AST Graph Visualization" debugging feature.
+- Added unit tests for the new script in `scripts/test_pipeline_mocks.py`.
+- Updated `test_frontend.html` dashboard UI to include an interactive toggle for Phase 10.
+- Validated frontend UI updates visually using Playwright script `scripts/verify_frontend.py` to ensure visual artifacts are correct.
+
+## [1.2.21] - Vulnerability Scanner Mock & UI Integration
+- Expanded `IDEAS.md` to include Automated Vulnerability Scanning.
+- Implemented `scripts/generate_vulnerability_report.py` to simulate a new "Phase 11: Automated Vulnerability Scanning" feature.
+- Added unit tests for the new script in `scripts/test_pipeline_mocks.py`.
+- Updated `test_frontend.html` dashboard UI to include an interactive toggle for Phase 11.
+- Validated frontend UI updates visually using Playwright script `scripts/verify_frontend.py` to ensure visual artifacts are correct.
+
+## [1.2.23] - AI Code Summarization Mock & UI Redesign Integration
+- Expanded `IDEAS.md` to include AI Code Summarization.
+- Implemented `scripts/generate_ai_summary.py` to simulate a new "Phase 12: AI Code Summarization" feature.
+- Added unit tests for the new script in `scripts/test_pipeline_mocks.py`.
+- Substantially redesigned `test_frontend.html` per user requirements to condense all functionality onto a single dashboard page.
+- Grouped phases logically into Core Pipeline, Verification/Debugging, and Experimental Expansions.
+- Validated frontend UI updates visually using Playwright script `scripts/verify_frontend.py` to ensure visual artifacts are correct.
