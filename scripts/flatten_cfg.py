@@ -9,10 +9,26 @@ def print_ast(node, depth=0):
     for child in node.get_children():
         print_ast(child, depth + 1)
 
+def recursive_flatten(node):
+    """
+    Recursively walk the AST to find explicit goto statements and labels,
+    preparing them for transformation into while loops or structured blocks.
+    """
+    # A true CFG flattener would analyze basic blocks, but here we just
+    # recursively traverse to find control flow structures.
+    if node.kind == clang.cindex.CursorKind.GOTO_STMT:
+        print(f"  [Mock] Found GOTO at line {node.location.line}")
+    elif node.kind == clang.cindex.CursorKind.LABEL_STMT:
+        print(f"  [Mock] Found LABEL '{node.spelling}' at line {node.location.line}")
+
+    for child in node.get_children():
+        recursive_flatten(child)
+
 def find_functions(node):
     if node.kind == clang.cindex.CursorKind.FUNCTION_DECL:
         print(f"Found function: {node.spelling}")
-        print_ast(node, depth=1)
+        # print_ast(node, depth=1) # Too noisy for production logs
+        recursive_flatten(node)
     for child in node.get_children():
         find_functions(child)
 
