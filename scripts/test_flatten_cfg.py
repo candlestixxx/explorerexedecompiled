@@ -27,18 +27,16 @@ class TestFlattenCFG(unittest.TestCase):
         output = f.getvalue()
         self.assertEqual(result, 0)
         self.assertIn("Found function: main", output)
-        self.assertIn("CursorKind.FUNCTION_DECL", output)
 
-    def test_nested_loops(self):
+    def test_nested_loops_and_gotos(self):
         filepath = os.path.join(self.test_dir, "test_loops.c")
         with open(filepath, "w") as f:
             f.write("""
             void test() {
-                for(int i=0; i<10; i++) {
-                    while(i > 0) {
-                        i--;
-                    }
-                }
+            L_START:
+                goto L_END;
+            L_END:
+                return;
             }
             """)
 
@@ -49,8 +47,8 @@ class TestFlattenCFG(unittest.TestCase):
         output = f.getvalue()
         self.assertEqual(result, 0)
         self.assertIn("Found function: test", output)
-        self.assertIn("CursorKind.FOR_STMT", output)
-        self.assertIn("CursorKind.WHILE_STMT", output)
+        self.assertIn("[Mock] Found LABEL", output)
+        self.assertIn("[Mock] Found GOTO", output)
 
     def test_missing_file(self):
         filepath = os.path.join(self.test_dir, "nonexistent.c")

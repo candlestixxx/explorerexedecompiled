@@ -120,5 +120,38 @@ class TestPipelineMocks(unittest.TestCase):
         self.assertIn("Generating Plugin Architecture", output)
         self.assertIn("plugin-based shell architecture", output)
 
+    def test_generate_ast_graph(self):
+        f = io.StringIO()
+        import generate_ast_graph
+        with contextlib.redirect_stdout(f):
+            result = generate_ast_graph.main()
+
+        output = f.getvalue()
+        self.assertEqual(result, 0)
+        self.assertIn("Generating AST Visualization Graph", output)
+        self.assertIn("ast_graph.dot", output)
+
+    def test_generate_vulnerability_report(self):
+        f = io.StringIO()
+        import generate_vulnerability_report
+        with contextlib.redirect_stdout(f):
+            result = generate_vulnerability_report.main()
+
+        output = f.getvalue()
+        self.assertEqual(result, 0)
+        self.assertIn("Generating Vulnerability Report", output)
+        self.assertIn("vulnerability_report.json", output)
+
+    def test_generate_ai_summary(self):
+        f = io.StringIO()
+        import generate_ai_summary
+        with contextlib.redirect_stdout(f):
+            result = generate_ai_summary.main()
+
+        output = f.getvalue()
+        self.assertEqual(result, 0)
+        self.assertIn("Generating AI Code Summaries", output)
+        self.assertIn("Injected human-readable docstrings", output)
+
 if __name__ == "__main__":
     unittest.main()
