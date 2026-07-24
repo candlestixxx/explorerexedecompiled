@@ -44,8 +44,7 @@ class TestPipelineMocks(unittest.TestCase):
 
         output = f.getvalue()
         self.assertEqual(result, 0)
-        self.assertIn("Mock: Created module_a.cpp", output)
-        self.assertIn("Mock: Created module_b.cpp", output)
+        self.assertIn("Created src/module_0.cpp", output)
 
     def test_segment_c_missing_file(self):
         f = io.StringIO()

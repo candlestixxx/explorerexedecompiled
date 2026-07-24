@@ -7,10 +7,12 @@ RUN apt-get update && apt-get install -y \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
-# Mocking Ghidra for the test environment
-RUN mkdir -p /opt/ghidra/support
-RUN echo '#!/bin/bash\necho "MOCK GHIDRA HEADLESS EXECUTION"' > /opt/ghidra/support/analyzeHeadless
-RUN chmod +x /opt/ghidra/support/analyzeHeadless
+# Install real Ghidra
+RUN wget -q https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_11.0.3_build/ghidra_11.0.3_PUBLIC_20240410.zip -O /tmp/ghidra.zip && \
+    unzip -q /tmp/ghidra.zip -d /opt && \
+    mv /opt/ghidra_11.0.3_PUBLIC /opt/ghidra && \
+    rm /tmp/ghidra.zip
 
 ENV GHIDRA_INSTALL_DIR=/opt/ghidra
+ENV PATH="${GHIDRA_INSTALL_DIR}/support:${PATH}"
 WORKDIR /workspace

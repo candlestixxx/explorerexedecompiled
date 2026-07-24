@@ -13,8 +13,17 @@ def get_pdb_info(pe):
         if debug.struct.Type == 2: # IMAGE_DEBUG_TYPE_CODEVIEW
             cv = debug.entry
             if cv and cv.CvSignature == b'RSDS':
-                guid = f"{cv.Signature_Data1:08X}{cv.Signature_Data2:04X}{cv.Signature_Data3:04X}{cv.Signature_Data4[:2].hex().upper()}{cv.Signature_Data4[2:].hex().upper()}"
-                return guid, cv.Age, cv.PdbFileName.decode('utf-8').strip('\x00')
+                if hasattr(cv, 'Signature_String'):
+                    guid = cv.Signature_String[:-1]
+                    return guid, cv.Age, cv.PdbFileName.decode('utf-8').strip('\x00')
+                else:
+                    data4 = cv.Signature_Data4
+                    if isinstance(data4, int):
+                        data4_hex = f"{data4:016X}"
+                    else:
+                        data4_hex = data4.hex().upper()
+                    guid = f"{cv.Signature_Data1:08X}{cv.Signature_Data2:04X}{cv.Signature_Data3:04X}{data4_hex}"
+                    return guid, cv.Age, cv.PdbFileName.decode('utf-8').strip('\x00')
     return None
 
 def main():

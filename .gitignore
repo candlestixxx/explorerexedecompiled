@@ -5,3 +5,7 @@ build/
 *.o
 *.a
 input/
+project/
+src/monolithic_output.c
+explorer.pdb
+pdb_info.txt

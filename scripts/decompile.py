@@ -13,15 +13,26 @@ def main():
 
     print(f"Orchestrating Dockerized headless decompilation for {binary_path}...")
 
-    # Normally we would run docker build and docker run here.
-    # We will mock the docker run for this environment.
-    print(f"Running: docker run --rm -v $(pwd):/workspace ghidra-decompiler /opt/ghidra/support/analyzeHeadless /workspace/project Project -import /workspace/{binary_path} -postScript /workspace/scripts/DumpC.py")
-
-    # Assuming success of DumpC.py, we create a mock output C file if it doesn't exist
     os.makedirs("src", exist_ok=True)
-    with open("src/monolithic_output.c", "w") as f:
-        f.write("// Decompiled output from Ghidra\n")
-        f.write("int main() { return 0; }\n")
+    os.makedirs("project", exist_ok=True)
+
+    cmd = [
+        "docker", "run", "--rm",
+        "-v", f"{os.getcwd()}:/workspace",
+        "ghidra-decompiler",
+        "/opt/ghidra/support/analyzeHeadless",
+        "/workspace/project", "Project",
+        "-import", f"/workspace/{binary_path}",
+        "-postScript", "/workspace/scripts/DumpC.py",
+        "-deleteProject"
+    ]
+
+    print(f"Running: {' '.join(cmd)}")
+    result = subprocess.run(cmd)
+
+    if result.returncode != 0:
+        print("Decompilation failed!")
+        return 1
 
     print("Decompilation complete. Output saved to src/monolithic_output.c")
     return 0
