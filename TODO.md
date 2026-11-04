@@ -20,8 +20,12 @@
 - [x] Verify static library linking with C++ sources using CMake.
 - [x] Redesign `test_frontend.html` into a high-value consolidated master dashboard with an embedded System Tray Controller, server management controls (Start, Pause, Quit Servers), tooltips, and live telemetry log streaming.
 - [x] Reorganize extension scripts into `scripts/pipeline_extensions.py` nondestructively with in-depth comments explaining architectural rationale, structural side effects, and optimizations per Section 5.
+- [x] Install MinGW-w64 toolchains and build `ghidra-decompiler` Docker container with Ghidra 11.0.3 to unblock native headless decompilation.
+- [x] Inject Ghidra primitive typedefs in `scripts/refine_c.py` to enable successful libclang AST parsing in Phases 5-6.
+- [x] Synthesize common type headers in `include/explorer_types.h` and modularized units in `src/module_0.cpp`.
 
 ## Post-1.0 Objectives
 - [x] Create an automated repository synchronization script (`sync.sh`) to fulfill Section 2 upstream merging/submodule cleanup directives.
 - [ ] Ingest legitimate `explorer.exe` (Windows 10 Build 19045) using the master pipeline script.
 - [x] Resolve any unexpected AST failure cases that emerge from massive production binaries versus the simple mock C++ tests.
+- [x] Execute complete end-to-end simulation passes with no errors.

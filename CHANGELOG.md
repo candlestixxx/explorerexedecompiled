@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [1.2.33] - End-to-End Pipeline Unblocking, MinGW Toolchain & Ghidra Typing Refinement
+- Installed MinGW-w64 cross-compilers (`x86_64-w64-mingw32-gcc`, `x86_64-w64-mingw32-g++`) and verified `validate_env.py` and CMake toolchain detection.
+- Configured Docker daemon with `vfs` storage driver and built genuine `ghidra-decompiler` container image with Ghidra 11.0.3 and OpenJDK 17.
+- Updated `scripts/decompile.py` to ensure non-root universal read/write permissions on `src/monolithic_output.c`.
+- Enhanced `scripts/refine_c.py` to inject Ghidra primitive typedefs and macros (`undefined`, `ulonglong`, `longlong`, `byte`, `bool`, `LOCK()`) into `src/monolithic_output.c`, allowing `libclang` AST parsers (`flatten_cfg.py`, `synthesize_ast_blocks.py`) to parse real Ghidra translation units cleanly.
+- Updated `CMakeLists.txt` to compile modular C++ units (`src/*.cpp`) and avoid direct compilation of raw 7.0MB Ghidra pseudo-C files.
+- Enhanced `scripts/synthesize_headers.py` and `scripts/segment_c.py` to generate structured headers (`include/explorer_types.h`) and modularized C++ units (`src/module_0.cpp`).
+- Hardened `test_mock_compilation.sh` to automatically initialize the CMake build directory if not already created.
+- Verified end-to-end simulated ingestion pipeline (`simulate_ingestion.py`), Python unit tests (`run_tests.sh`), and mock compilation (`test_mock_compilation.sh`) with 100% success.
+
 ## [1.2.32] - UI Redesign, System Tray Integration & Script Reorganization
 - Redesigned `test_frontend.html` into a consolidated single-page dashboard categorized by high value (Core Decompilation Engine, Intelligence & Security Diagnostics, Advanced Architecture Generators).
 - Added an interactive System Tray Icon widget and controller to `test_frontend.html` with functional daemon start, pause, clear logs, and server quit capabilities.

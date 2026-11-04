@@ -5,7 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 include_directories(include)
-file(GLOB_RECURSE SRC_FILES "src/*.cpp" "src/*.c")
+# Compile modular C++ sources and avoid compiling raw monolithic C output directly in static lib
+file(GLOB_RECURSE SRC_FILES "src/*.cpp")
 
 if(NOT SRC_FILES)
     message(WARNING "No source files found in src/. Adding a mock file to prevent CMake error.")
