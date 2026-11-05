@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-import sys, subprocess, os
+"""
+Orchestrates Dockerized headless Ghidra decompilation.
+Executes Ghidra within the ghidra-decompiler container to produce C pseudocode
+at src/monolithic_output.c, ensuring universal read/write permissions for pipeline stages.
+"""
+import sys
+import subprocess
+import os
 
 def main():
     if len(sys.argv) < 2:
@@ -16,15 +23,18 @@ def main():
     os.makedirs("src", exist_ok=True)
     os.makedirs("project", exist_ok=True)
 
+    # Command executes Ghidra headless analysis and then grants read/write permissions on the generated file
+    container_cmd = (
+        f"/opt/ghidra/support/analyzeHeadless /workspace/project Project "
+        f"-import /workspace/{binary_path} -postScript /workspace/scripts/DumpC.py -deleteProject "
+        f"&& chmod 666 /workspace/src/monolithic_output.c 2>/dev/null || true"
+    )
+
     cmd = [
         "docker", "run", "--rm",
         "-v", f"{os.getcwd()}:/workspace",
         "ghidra-decompiler",
-        "/opt/ghidra/support/analyzeHeadless",
-        "/workspace/project", "Project",
-        "-import", f"/workspace/{binary_path}",
-        "-postScript", "/workspace/scripts/DumpC.py",
-        "-deleteProject"
+        "bash", "-c", container_cmd
     ]
 
     print(f"Running: {' '.join(cmd)}")
